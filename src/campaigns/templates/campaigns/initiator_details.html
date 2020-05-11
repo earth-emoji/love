@@ -1,0 +1,265 @@
+{% extends 'member.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui positive message" id="results" style="display:none;">
+                    <i class="close icon"></i>
+                    <p id="success-msg"></p>
+                </div>
+                <h2 class="ui header">{{ campaign.title }}</h2>
+            </div>
+            <div class="sixteen wide column">
+                <p>{{ campaign.description }}</p>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <h4 class="ui header">Volunteer Requests</h4>
+                <table class="ui basic compact table">
+                    <thead class="full-width">
+                        <tr>
+                            <th></th>
+                            <th>Volunteer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for volunteer in volunteers %}
+                            <tr id="tr_{{volunteer.slug}}">
+                                <td class="collapsing">
+                                    <form id="{{ volunteer.slug }}" class="ui form v-form"  method="POST" action="{{ volunteer.response_url }}">
+                                        {% csrf_token %}
+                                        <div class="field">
+                                            <select name="status" id="sel_{{ volunteer.slug }}" class="ui fluid dropdown">
+                                                <option value="">Status</option>
+                                                <option value="Accept">Accept</option>
+                                                <option value="Reject">Deny</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>
+                                    <h4 class="ui image header">
+                                        <img src="{{ MEDIA_URL }}{{ volunteer.member.user.photo }}" class="ui mini rounded image">
+                                        <div class="content">
+                                            {{ volunteer.member.user.name }}
+                                            <div class="sub header">{{ volunteer.member.user.username }}
+                                        </div>
+                                        </div>
+                                    </h4>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class="full-width">
+                        <tr>
+                            <th></th>
+                            <th colspan="4">
+                                <a href="{% url 'campaigns:teams' campaign.slug %}" class="ui right floated small teal labeled icon button">
+                                    <i class="users icon"></i> View Teams
+                                </a>
+                                <div class="ui small  button">
+                                    Approve
+                                </div>
+                                <div class="ui small  disabled button">
+                                    Approve All
+                                </div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div class="row">
+            <div class="eight wide column">
+                <h2 class="ui header">Goals</h2>
+                <div class="ui teal progress" data-percent="52" id="example2">
+                    <div class="bar"></div>
+                    <div class="label">52% Complete</div>
+                </div>
+                <table class="ui striped table">
+                    <thead>
+                        <tr>
+                        <th>Name</th>
+                        <th>Date Joined</th>
+                        <th>E-mail</th>
+                        <th>Called</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Jamie Harington</td>
+                            <td>January 11, 2014</td>
+                            <td>jamieharingonton@yahoo.com</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Jill Lewis</td>
+                            <td>May 11, 2014</td>
+                            <td>jilsewris22@yahoo.com</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Jamie Harington</td>
+                            <td>January 11, 2014</td>
+                            <td>jamieharingonton@yahoo.com</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Jill Lewis</td>
+                            <td>May 11, 2014</td>
+                            <td>jilsewris22@yahoo.com</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="eight wide column">
+                <h2 class="ui header">Donations</h2>
+                <div class="ui teal progress" data-percent="74" id="example1">
+                    <div class="bar"></div>
+                    <div class="label">74% Funded</div>
+                </div>
+                <table class="ui striped table">
+                    <thead>
+                        <tr>
+                        <th>Name</th>
+                        <th>Date Joined</th>
+                        <th>E-mail</th>
+                        <th>Called</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Jamie Harington</td>
+                            <td>January 11, 2014</td>
+                            <td>jamieharingonton@yahoo.com</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Jill Lewis</td>
+                            <td>May 11, 2014</td>
+                            <td>jilsewris22@yahoo.com</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Jamie Harington</td>
+                            <td>January 11, 2014</td>
+                            <td>jamieharingonton@yahoo.com</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Jill Lewis</td>
+                            <td>May 11, 2014</td>
+                            <td>jilsewris22@yahoo.com</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>John Lilki</td>
+                            <td>September 14, 2013</td>
+                            <td>jhlilk22@yahoo.com</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function() {
+
+        $('#example1').progress();
+        $('#example2').progress();
+        $('select.dropdown').dropdown();
+
+        $('.message .close').on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
+        forms = document.querySelectorAll(".v-form");
+
+        forms.forEach(function(form) {
+            $(`#sel_${form.id}`).on('change', function(e) {
+                e.preventDefault();
+                
+                $.ajax({
+                    data: $(form).serialize(),
+                    type: $(form).attr('method'),
+                    url: $(form).attr('action'),
+                    success: function(response) {
+                        console.log(response);
+                        if(response['success']) {
+                            $("#results").css("display", "block");
+                            $("#success-msg").html(response['message']);
+                            $(`#tr_${form.id}`).remove();
+                        }
+                        if(response['error']) {
+                        } 
+                    },
+                    error: function (request, status, error) {
+                        console.log(request.responseText);
+                    }
+                });
+            });
+        });
+
+    });
+</script>
+{% endblock javascript %}

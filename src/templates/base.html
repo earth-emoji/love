@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BitSaviour</title>
+    <link rel="stylesheet" href="{% static 'lib/semantic/semantic.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/utils.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    {% block styles %}{% endblock styles %}
+</head>
+<body>
+    {% include 'partials/_navbar.html' %}
+    <div class="ui main fluid container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    {% include 'partials/_footer.html' %}
+    <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/semantic/semantic.min.js' %}"></script>
+    <script src="{% static 'js/ajaxCRUD.js' %}"></script>
+    {% block javascript %}{% endblock javascript %}
+</body>
+</html>

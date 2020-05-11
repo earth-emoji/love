@@ -1,0 +1,33 @@
+{% extends 'member.html' %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1>Campaigns</h1>
+                <div class="ui items">
+                    {% for campaign in campaigns %}
+                    <div class="ui segment">
+                        <div class="item">
+                            <div class="content">
+                                <a href="{% url 'campaigns:details' campaign.slug %}" class="ui header">{{ campaign.title }}</a>
+                                <div class="description">
+                                    <p>{{ campaign.description }}</p>
+                                </div>
+                                <div class="ui divider"></div>
+                                <div class="extra">
+                                    <div class="ui label">Creator: {{ campaign.initiator.user.username }}</div>
+                                    <div class="ui label"><i class="globe icon"></i> Location</div>
+                                    <div class="ui label">Category</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

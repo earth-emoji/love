@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui positive message" id="results" style="display:none;">
+                    <i class="close icon"></i>
+                    <p id="success-msg"></p>
+                </div>
+                <h1 class="ui header">{{ campaign.title }}</h1>
+                <p>{{ campaign.description }}</p>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui fluid buttons">
+                    <button id="volunteer" class="ui button">Volunteer</button>
+                    <div class="or"></div>
+                    <button id="donate" class="ui teal button">Donate</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="eleven wide column">
+                <div class="ui top attached tabular menu">
+                    <a class="active item" data-tab="first">Goals</a>
+                    <a class="item" data-tab="second">Posts</a>
+                    <a class="item" data-tab="third">Events</a>
+                </div>
+                <div class="ui bottom attached active tab segment" data-tab="first">
+                    <h2 class="ui header">Our Goals</h2>
+                    <div class="ui teal progress" data-percent="52" id="example2">
+                        <div class="bar"></div>
+                        <div class="label">52% Complete</div>
+                    </div>
+                    <table class="ui striped table">
+                        <thead>
+                            <tr>
+                            <th>Name</th>
+                            <th>Date Joined</th>
+                            <th>E-mail</th>
+                            <th>Called</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Lilki</td>
+                                <td>September 14, 2013</td>
+                                <td>jhlilk22@yahoo.com</td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td>Jamie Harington</td>
+                                <td>January 11, 2014</td>
+                                <td>jamieharingonton@yahoo.com</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Jill Lewis</td>
+                                <td>May 11, 2014</td>
+                                <td>jilsewris22@yahoo.com</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>John Lilki</td>
+                                <td>September 14, 2013</td>
+                                <td>jhlilk22@yahoo.com</td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td>John Lilki</td>
+                                <td>September 14, 2013</td>
+                                <td>jhlilk22@yahoo.com</td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td>Jamie Harington</td>
+                                <td>January 11, 2014</td>
+                                <td>jamieharingonton@yahoo.com</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Jill Lewis</td>
+                                <td>May 11, 2014</td>
+                                <td>jilsewris22@yahoo.com</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>John Lilki</td>
+                                <td>September 14, 2013</td>
+                                <td>jhlilk22@yahoo.com</td>
+                                <td>No</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="ui bottom attached tab segment" data-tab="second">
+                Second
+                </div>
+                <div class="ui bottom attached tab segment" data-tab="third">
+                Third
+                </div>
+            </div>
+
+            <div class="five wide column">
+                <h2 class="ui header">Volunteers</h2>
+                <div class="ui tiny images">
+                    {% for volunteer in volunteers %}
+                        <img src="{{ MEDIA_URL }}{{ volunteer.member.user.photo }}" class="ui image">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="v-modal" class="ui longer modal">
+    <div class="header">Volunteer</div>
+    <div class="scrolling content">
+        <form id="v-form" class="ui large container form" method="POST" action="{{ campaign.volunteer_url }}">
+        {% csrf_token %}
+        <div class="field">
+            <label for="reason">Reason:</label>
+            <textarea id="reason" name="reason"></textarea>
+        </div>
+        <div class="ui divider"></div>
+        <button class="ui teal button" type="submit">Submit</button>
+    </form>
+    </div>
+</div>
+
+<div id="d-modal" class="ui longer modal">
+    <div class="header">Donate</div>
+    <div class="scrolling content">
+        <p>Very long content goes here</p>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    $('.menu .item').tab();
+    //$('#example1').progress();
+    $('#example2').progress();
+
+    $("#volunteer").click(function() {
+        $('#v-modal').modal('show');
+    });
+
+    $("#donate").click(function() {
+        $('#d-modal').modal('show');
+    });
+
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
+    $('#v-form').on('submit', function(event){
+        event.preventDefault();
+
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            success: function(response) {
+                 console.log(response);
+                 if(response['success']) {
+                    $("#results").css("display", "block");
+                    $("#success-msg").html(response['message'])
+                    $(".ui.longer.modal").modal('hide');
+                 }
+                 if(response['error']) {
+                 } 
+            },
+            error: function (request, status, error) {
+                 console.log(request.responseText);
+            }
+        });
+    });
+
+</script>
+{% endblock javascript %}
