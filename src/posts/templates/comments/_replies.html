@@ -1,0 +1,28 @@
+<div class="comments">
+    {% for reply in comment.replies.all %}
+    <div class="comment">
+        <a class="avatar">
+            <img
+                src="{{ MEDIA_URL }}{{ reply.author.user.photo }}"
+            />
+        </a>
+        <div class="content">
+            <a class="author"
+                >{{ reply.author.user.name }}</a
+            >
+            <div class="metadata">
+                <span class="date"
+                    >Created at: {{
+                    reply.created_at }}</span
+                >
+            </div>
+            <div class="text">
+                <p>{{ reply.content }}</p>
+            </div>
+            <div class="actions">
+                <a class="reply">Reply</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

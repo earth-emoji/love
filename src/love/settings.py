@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'users',
     'accounts',
     'campaigns',
@@ -45,9 +46,11 @@ INSTALLED_APPS = [
     'error_pages',
     'photos',
     'notifi',
+    'posts',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -156,3 +159,11 @@ LOGOUT_REDIRECT_URL = 'home'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
 }
+
+# If True, all origins will be accepted
+CORS_ORIGIN_ALLOW_ALL = False
+
+# List of origins that are authorized to make cross-site HTTP requests
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8081',
+)

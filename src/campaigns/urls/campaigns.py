@@ -12,15 +12,6 @@ urlpatterns = [
         path('<uuid:slug>/delete/', views.campaign_delete, name='delete'),
         path('<uuid:slug>/volunteer/', views.volunteer_request, name='volunteer-request'),
         path('<uuid:slug>/teams/', views.campaign_teams, name='teams'),
+        path('<uuid:slug>/posts/', views.campaign_posts, name='posts'),
     ], 'campaigns'))),
-    path('volunteers/', include(([
-        path('<uuid:slug>/response/', views.volunteer_response, name='volunteer-response'),
-    ], 'volunteers'))),
-    path('teams/', include(([
-        path('create/', views.create_team, name='create'),
-        path('<uuid:slug>/', views.team_details, name='details'),
-        path('<uuid:team_slug>/leader/<uuid:leader_slug>/', views.make_team_leader, name='leader'),
-        path('<uuid:team_slug>/member/<uuid:member_slug>/', views.make_team_member, name='members'),
-        path('campaign/<uuid:slug>/', views.team_collection, name='cteams'),
-    ], 'teams'))),
 ]

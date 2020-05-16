@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include('error_pages.urls')),
     path('', include('accounts.urls')),
     path('', include('campaigns.urls')),
+    path('', include('posts.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,6 +6,39 @@
     <div class="ui padded grid">
         <div class="row">
             <div class="sixteen wide column">
+                <div class="ui secondary  menu">
+                    <a class="active item">
+                        {{ campaign.title }}
+                    </a>
+                    <a class="item">
+                        Teams
+                    </a>
+                    <a class="item">
+                        Donations
+                    </a>
+                    <a href="{% url 'campaigns:posts' campaign.slug %}" class="item">
+                        Posts
+                    </a>
+                    <a class="item">
+                        Events
+                    </a>
+                    <div class="right menu">
+                        <div class="item">
+                            <div class="ui icon input">
+                                <input type="text" placeholder="Search...">
+                                <i class="search link icon"></i>
+                            </div>
+                        </div>
+                        <a href="{% url 'members:index' request.user.member.slug %}" class="ui item">
+                            Activity
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="sixteen wide column">
                 <div class="ui positive message" id="results" style="display:none;">
                     <i class="close icon"></i>
                     <p id="success-msg"></p>
@@ -21,7 +54,6 @@
 
         <div class="row">
             <div class="sixteen wide column">
-                <h4 class="ui header">Volunteer Requests</h4>
                 <table class="ui basic compact table">
                     <thead class="full-width">
                         <tr>
@@ -49,8 +81,7 @@
                                         <img src="{{ MEDIA_URL }}{{ volunteer.member.user.photo }}" class="ui mini rounded image">
                                         <div class="content">
                                             {{ volunteer.member.user.name }}
-                                            <div class="sub header">{{ volunteer.member.user.username }}
-                                        </div>
+                                            <div class="sub header">{{ volunteer.member.user.username }}</div>
                                         </div>
                                     </h4>
                                 </td>
@@ -61,7 +92,7 @@
                         <tr>
                             <th></th>
                             <th colspan="4">
-                                <a href="{% url 'campaigns:teams' campaign.slug %}" class="ui right floated small teal labeled icon button">
+                                <!--<a href="{% url 'campaigns:teams' campaign.slug %}" class="ui right floated small teal labeled icon button">
                                     <i class="users icon"></i> View Teams
                                 </a>
                                 <div class="ui small  button">
@@ -69,7 +100,7 @@
                                 </div>
                                 <div class="ui small  disabled button">
                                     Approve All
-                                </div>
+                                </div>-->
                             </th>
                         </tr>
                     </tfoot>
@@ -80,7 +111,7 @@
         <div class="ui divider"></div>
 
         <div class="row">
-            <div class="eight wide column">
+            <!--<div class="eight wide column">
                 <h2 class="ui header">Goals</h2>
                 <div class="ui teal progress" data-percent="52" id="example2">
                     <div class="bar"></div>
@@ -146,8 +177,8 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="eight wide column">
+            </div>-->
+            <div class="sixteen wide column">
                 <h2 class="ui header">Donations</h2>
                 <div class="ui teal progress" data-percent="74" id="example1">
                     <div class="bar"></div>

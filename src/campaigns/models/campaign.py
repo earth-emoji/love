@@ -21,6 +21,10 @@ class Campaign(models.Model):
     def volunteer_url(self):
         return "/campaigns/%s/volunteer/" % (self.slug)
 
+    @property
+    def new_post_url(self):
+        return f"/api/posts/campaign/{self.slug}/"
+
     def __str__(self):
         return self.title
 

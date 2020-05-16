@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.core.serializers import serialize
 from django.http import JsonResponse, Http404, HttpResponse
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
