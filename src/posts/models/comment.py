@@ -22,9 +22,13 @@ class Comment(models.Model):
     def short_comment(self):
         return (self.content[:75] + '...') if len(self.content) > 75 else self.content
 
-    def children(self):
+    @property
+    def post_reply_url(self):
+        return reverse("comments-api:reply", kwargs={"slug": self.slug})
+
+    def get_replies(self):
         """Return replies of a comment."""
-        return Comment.objects.filter(parent=self)
+        return Comment.objects.filter(parent=self).order_by('-created_at')
 
     class Meta:
         verbose_name = 'comment'

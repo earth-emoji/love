@@ -159,7 +159,63 @@
                     console.log(request.responseText);
                 }
             });
+        });
 
+        var rForms = document.querySelectorAll(".reply-form");
+
+        rForms.forEach(function(form) {
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    data: $(form).serialize(),
+                    type: $(form).attr('method'),
+                    url: $(form).attr('action'),
+                    success: function(json) {
+                        console.log(json);
+                        $(".reply-form")[0].reset();
+    
+                        var comment = document.createElement("div");
+                        var avatar = document.createElement("a");
+                        var img = document.createElement("img");
+                        var content = document.createElement("div");
+                        var author = document.createElement("a");
+                        var text = document.createElement("div");
+                        var divider = document.createElement("div");
+                        var metadata = document.createElement("div");
+                        var created_at = document.createElement("span");
+                        // var actions = document.createElement()
+                        
+                        $(comment).addClass("comment");
+                        $(avatar).addClass("avatar");
+                        $(content).addClass("content");
+                        $(author).addClass("author");
+                        $(metadata).addClass("metadata");
+                        $(created_at).addClass("date");
+                        $(text).addClass("text");
+                        $(divider).addClass("ui divider");
+                        $(img).attr("src", json.author.user.photo)
+    
+                        var comment_content = $(content)
+                            .append($(author).html(json.author.user.username))
+                            .append($(metadata)
+                                .append($(created_at).html(`Created at: ${json.serialized_date}`)))
+                            .append($(text).html(`<p>${json.content}</p>`));
+    
+                        var comment_avatar = $(avatar)
+                            .append(img)
+    
+                        var comment_view = $(comment)
+                            .append(divider)
+                            .append(comment_avatar)
+                            .append(comment_content);
+    
+                        $(`#{}replies`).prepend(comment_view);
+                    },
+                    error: function (request, status, error) {
+                        console.log(request.responseText);
+                    }
+                });
+            })
         });
     });
 </script>

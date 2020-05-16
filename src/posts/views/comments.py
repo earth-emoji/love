@@ -7,7 +7,7 @@ from rest_framework import status
 
 from users.decorators import members_required
 from posts.models import Post, Comment
-from posts.serializers import CommentSerializer
+from posts.serializers import CommentSerializer, ReplySerializer
 
 @login_required
 @members_required
@@ -30,6 +30,32 @@ def comment_collection(request, slug):
             'author_pk': request.user.member.pk
         }
         serializer = CommentSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@login_required
+@members_required
+@api_view(['GET', 'POST'])
+def reply_collection(request, slug):
+    try:
+        comment = Comment.objects.get(slug=slug)
+    except Comment.DoesNotExist:
+        return JsonResponse({'message': 'Record does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        replies = Comment.objects.filter(parent=comment).order_by('-created_at')
+        serializer = ReplySerializer(replies, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    elif request.method == 'POST':
+        data = {
+            'content': request.data.get('reply-content'),
+            'post_pk': comment.post.pk,
+            'author_pk': request.user.member.pk,
+            'parent_pk': comment.pk,
+        }
+        serializer = ReplySerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
