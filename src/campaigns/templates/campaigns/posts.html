@@ -33,8 +33,9 @@
                                 </div>
                                 
                                 <form id="comment-form" class="ui reply form mt-3" method="POST" action="{{ post.post_comment_url }}">
+                                    {% csrf_token %}
                                     <div class="field">
-                                        <textarea id="c-content" name="c-content"></textarea>
+                                        <textarea id="c-content" name="c-content" required></textarea>
                                     </div>
                                     <button type="submit" class="ui blue labeled submit icon button">
                                         <i class="icon edit"></i> Add Reply
@@ -172,7 +173,7 @@
                     url: $(form).attr('action'),
                     success: function(json) {
                         console.log(json);
-                        $(".reply-form")[0].reset();
+                        $(form)[0].reset();
     
                         var comment = document.createElement("div");
                         var avatar = document.createElement("a");
@@ -209,7 +210,7 @@
                             .append(comment_avatar)
                             .append(comment_content);
     
-                        $(`#{}replies`).prepend(comment_view);
+                        $(`#r_${form.id}`).prepend(comment_view);
                     },
                     error: function (request, status, error) {
                         console.log(request.responseText);

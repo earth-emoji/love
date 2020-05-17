@@ -28,115 +28,33 @@
 
         <div class="row">
             <div class="eleven wide column">
-                <div class="ui fluid card">
-                    <div class="content">
-                        <div class="header">Cute Dog</div>
-                        <div class="meta">2 days ago</div>
-                        <div class="description">
-                            <p>Cute dogs come in a variety of shapes and sizes. Some cute dogs are cute for their adorable faces, others for their tiny stature, and even others for their massive size.</p>
-                            <p>Many people also have their own barometers for what makes a cute dog.</p>
-                        </div>
-                    </div>
-                    <div class="extra content">
-                        <i class="check icon"></i>
-                        121 Votes
-                    </div>
-                </div>
-                <div class="ui fluid card">
-                    <div class="content">
-                        <div class="header">Cute Dog</div>
-                        <div class="meta">2 days ago</div>
-                        <div class="description">
-                            <p>Cute dogs come in a variety of shapes and sizes. Some cute dogs are cute for their adorable faces, others for their tiny stature, and even others for their massive size.</p>
-                            <p>Many people also have their own barometers for what makes a cute dog.</p>
-                        </div>
-
-                        <div class="ui comments">
-                          <h3 class="ui dividing header">Comments</h3>
-                          <div class="comment">
-                            <a class="avatar">
-                              <img src="/images/avatar/small/matt.jpg">
-                            </a>
+                <div id="posts">
+                    {% for post in campaign.get_posts %}
+                        <div class="ui fluid card">
                             <div class="content">
-                              <a class="author">Matt</a>
-                              <div class="metadata">
-                                <span class="date">Today at 5:42PM</span>
-                              </div>
-                              <div class="text">
-                                How artistic!
-                              </div>
-                              <div class="actions">
-                                <a class="reply">Reply</a>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="comment">
-                            <a class="avatar">
-                              <img src="/images/avatar/small/elliot.jpg">
-                            </a>
-                            <div class="content">
-                              <a class="author">Elliot Fu</a>
-                              <div class="metadata">
-                                <span class="date">Yesterday at 12:30AM</span>
-                              </div>
-                              <div class="text">
-                                <p>This has been very useful for my research. Thanks as well!</p>
-                              </div>
-                              <div class="actions">
-                                <a class="reply">Reply</a>
-                              </div>
-                            </div>
-                            <div class="comments">
-                              <div class="comment">
-                                <a class="avatar">
-                                  <img src="/images/avatar/small/jenny.jpg">
-                                </a>
-                                <div class="content">
-                                  <a class="author">Jenny Hess</a>
-                                  <div class="metadata">
-                                    <span class="date">Just now</span>
-                                  </div>
-                                  <div class="text">
-                                    Elliot you are always so right :)
-                                  </div>
-                                  <div class="actions">
-                                    <a class="reply">Reply</a>
-                                  </div>
+                                <div class="header">{{ post.title }}</div>
+                                <div class="meta">{{ post.timelapse }}</div>
+                                <div class="description">
+                                    {{ post.content }}
                                 </div>
-                              </div>
+                                
+                                <form id="comment-form" class="ui reply form mt-3" method="POST" action="{{ post.post_comment_url }}">
+                                    <div class="field">
+                                        <textarea id="c-content" name="c-content" required></textarea>
+                                    </div>
+                                    <button type="submit" class="ui teal labeled submit icon button">
+                                        <i class="icon edit"></i> Add Reply
+                                    </button>
+                                </form>
+
+                                {% include 'comments/_comments.html' %}
                             </div>
-                          </div>
-                          <div class="comment">
-                            <a class="avatar">
-                              <img src="/images/avatar/small/joe.jpg">
-                            </a>
-                            <div class="content">
-                              <a class="author">Joe Henderson</a>
-                              <div class="metadata">
-                                <span class="date">5 days ago</span>
-                              </div>
-                              <div class="text">
-                                Dude, this is awesome. Thanks so much
-                              </div>
-                              <div class="actions">
-                                <a class="reply">Reply</a>
-                              </div>
+                            <div class="extra content">
+                                <i class="check icon"></i>
+                                121 Votes
                             </div>
-                          </div>
-                          <form class="ui reply form">
-                            <div class="field">
-                              <textarea></textarea>
-                            </div>
-                            <div class="ui blue labeled submit icon button">
-                              <i class="icon edit"></i> Add Reply
-                            </div>
-                          </form>
                         </div>
-                    </div>
-                    <div class="extra content">
-                        <i class="check icon"></i>
-                        121 Votes
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
 
@@ -177,6 +95,7 @@
 
 {% block javascript %}
 <script>
+$(document).ready(function() {
     $('.menu .item').tab();
     //$('#example1').progress();
     $('#example2').progress();
@@ -219,5 +138,138 @@
         });
     });
 
+    $("#comment-form").on("submit", function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            success: function(json) {
+                console.log(json);
+                $("#comment-form")[0].reset();
+
+                var comment = document.createElement("div");
+                var avatar = document.createElement("a");
+                var img = document.createElement("img");
+                var content = document.createElement("div");
+                var author = document.createElement("a");
+                var text = document.createElement("div");
+                var divider = document.createElement("div");
+                var metadata = document.createElement("div");
+                var created_at = document.createElement("span");
+                var commentForm = document.createElement("form");
+                var field = document.createElement("div");
+                var textarea = document.createElement("textarea");
+                var submitBtn = document.createElement("button");
+                var editIcon = document.createElement("i");
+                var csrfToken = document.createElement("input");
+                
+                $(comment).addClass("comment");
+                $(avatar).addClass("avatar");
+                $(content).addClass("content");
+                $(author).addClass("author");
+                $(metadata).addClass("metadata");
+                $(created_at).addClass("date");
+                $(text).addClass("text");
+                $(divider).addClass("ui divider");
+                $(commentForm).addClass("ui fluid reply form mt-3 reply-form");
+                $(field).addClass("field");
+                $(submitBtn).addClass("ui teal labeled submit icon button");
+                $(editIcon).addClass("icon edit");
+
+                $(commentForm).attr("id", json.slug);
+                $(commentForm).attr("method", "POST");
+                $(commentForm).attr("action", `/api/comments/${json.slug}/reply/`);
+                $(submitBtn).attr("type", "submit");
+                $(textarea).attr("name", "reply-content");
+                $(img).attr("src", json.author.user.photo);
+                //$(csrfToken).attr("type", "hidden").attr("name", "csrfmiddlewaretoken").attr("value", '{{ csrf_token }}')
+
+                var comment_content = $(content)
+                    .append($(author).html(json.author.user.username))
+                    .append($(metadata)
+                        .append($(created_at).html(`Created at: ${json.serialized_date}`)))
+                    .append($(text).html(`<p>${json.content}</p>`));
+
+                var comment_avatar = $(avatar)
+                    .append(img)
+
+                var comment_form = $(commentForm)
+                    //.append($(csrfToken))
+                    .append($(field).html(textarea))
+                    .append($(submitBtn).append($(editIcon)).append("Add Reply"));
+
+                var comment_view = $(comment)
+                    .append(divider)
+                    .append(comment_avatar)
+                    .append($(comment_content).append(comment_form));
+
+                $("#comments").prepend(comment_view);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    });
+
+    var rForms = document.querySelectorAll(".reply-form");
+
+    rForms.forEach(function(form) {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(form).serialize(),
+                type: $(form).attr('method'),
+                url: $(form).attr('action'),
+                success: function(json) {
+                    console.log(json);
+                    $(form)[0].reset();
+
+                    var comment = document.createElement("div");
+                    var avatar = document.createElement("a");
+                    var img = document.createElement("img");
+                    var content = document.createElement("div");
+                    var author = document.createElement("a");
+                    var text = document.createElement("div");
+                    var divider = document.createElement("div");
+                    var metadata = document.createElement("div");
+                    var created_at = document.createElement("span");
+                    
+                    // var actions = document.createElement()
+                    
+                    $(comment).addClass("comment");
+                    $(avatar).addClass("avatar");
+                    $(content).addClass("content");
+                    $(author).addClass("author");
+                    $(metadata).addClass("metadata");
+                    $(created_at).addClass("date");
+                    $(text).addClass("text");
+                    $(divider).addClass("ui divider");
+                    $(img).attr("src", json.author.user.photo)
+
+                    var comment_content = $(content)
+                        .append($(author).html(json.author.user.username))
+                        .append($(metadata)
+                            .append($(created_at).html(`Created at: ${json.serialized_date}`)))
+                        .append($(text).html(`<p>${json.content}</p>`));
+
+                    var comment_avatar = $(avatar)
+                        .append(img)
+
+                    var comment_view = $(comment)
+                        .append(divider)
+                        .append(comment_avatar)
+                        .append(comment_content);
+
+                    $(`#r_${form.id}`).prepend(comment_view);
+                },
+                error: function (request, status, error) {
+                    console.log(request.responseText);
+                }
+            });
+        })
+    });
+});
 </script>
 {% endblock javascript %}

@@ -18,7 +18,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('content', 'created_at', 'serialized_date', 'post', 'post_pk', 'author', 'author_pk')
+        fields = ('slug', 'content', 'created_at', 'serialized_date', 'post', 'post_pk', 'author', 'author_pk')
         depth = 2
 
 class ReplySerializer(serializers.ModelSerializer):
@@ -38,5 +38,5 @@ class ReplySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('content', 'created_at', 'serialized_date', 'post', 'post_pk', 'author', 'author_pk', 'parent', 'parent_pk')
+        fields = ('slug', 'content', 'created_at', 'serialized_date', 'post', 'post_pk', 'author', 'author_pk', 'parent', 'parent_pk')
         depth = 2

@@ -25,6 +25,9 @@ class Campaign(models.Model):
     def new_post_url(self):
         return f"/api/posts/campaign/{self.slug}/"
 
+    def get_posts(self):
+        return self.posts.filter(campaign=self).order_by('-created_at')
+
     def __str__(self):
         return self.title
 

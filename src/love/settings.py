@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'photos',
     'notifi',
     'posts',
+    'events',
 ]
 
 MIDDLEWARE = [
