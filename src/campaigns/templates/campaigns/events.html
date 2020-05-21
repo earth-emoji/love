@@ -1,0 +1,147 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block styles %}
+<style>
+    .properties_table{
+        min-height: 540px;
+        font-size: 14px;
+     }
+</style>
+{% endblock styles %}
+
+{% block content %}
+
+<div class="ui container">
+    <!--#e8e8e8 teal: #00b5ad -->
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui header">{{ campaign.title }}'s Events</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <button
+                    type="button"
+                    id="new-event"
+                    class="ui teal button fluid">
+                    New Event
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="fields">
+                    <div class="four wide field">
+                      <label>Visibility</label>
+                      <select class="ui fluid dropdown" id="visibility">
+                            <option selected="true" disabled="disabled" value="all">Choose visibility</option>
+                            <option value="Campaign">Campaign</option>
+                            <option value="Public">Public</option>
+                            <option value="Private">Private</option>
+                      </select>
+                    </div>
+                    <div class="four wide field">
+                        <label>Day</label>
+                        <select class="ui fluid dropdown" id="day">
+                            <option selected="true" disabled="disabled" value="all">Choose day</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                    </div>
+                    <div class="four wide field">
+                        <label>Sort</label>
+                        <select class="ui fluid dropdown" id="sort_by">
+                            <option selected="true" disabled="disabled" value="none">Choose option</option>
+                            <option value='name'>Name</option>
+                            <option value='start_time'>Time</option>
+                        </select>
+                    </div>
+                    <div class="four wide field mt-3">
+                        <a id="display_all" class="ui secondary button">Display All</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <div id="result-count" class="right aligned">
+                    <span style="font-weight:bold;"></span> results found.
+                </div>
+                <div id="no_results">
+                    <h5>No results found</h5>
+                </div>
+                <table class="ui striped table" id="list_data" data-url="{{ campaign.get_events_api_url }}">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Visibility</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                      </tr>
+                    </thead>
+                    <tbody id="listing">
+                        {% for event in campaign.get_events %}
+                            <tr>
+                                <td>{{ event.name }}</td>
+                                <td>{{ event.location }}</td>
+                                <td>{{ event.visibility }}</td>
+                                <td>{{ event.start_time }}</td>
+                                <td>{{ event.end_time }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui basic buttons">
+                    <button type="button" class="ui button" id="previous">Previous</button>
+                    <button type="button" class="ui button" id="next">Next</button>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'js/events.js' %}"></script>
+{% endblock javascript %}

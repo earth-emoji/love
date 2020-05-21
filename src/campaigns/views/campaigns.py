@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
@@ -6,6 +7,7 @@ from users.decorators import members_required
 from campaigns.forms import CampaignForm
 from campaigns.models import Campaign, Volunteer
 from posts.models import Post, Comment
+from events.models import Event
 
 @login_required
 @members_required
@@ -149,3 +151,25 @@ def campaign_posts(request, slug):
     context["campaign"] = campaign
     context["posts"] = posts
     return render(request, template_name, context)
+
+@login_required
+@members_required
+def campaign_events(request, slug):
+    template_name = 'campaigns/events.html'
+    context = {}
+
+    if slug is None or slug == "":
+        return redirect('not-found')
+
+    campaign = Campaign.objects.get(slug=slug)
+
+    if campaign is None:
+        return redirect('not-found')
+
+    if not(campaign.initiator == request.user.member):
+        return redirect('forbidden')
+
+    context["campaign"] = campaign
+
+    return render(request, template_name, context)
+

@@ -19,7 +19,7 @@
                     <a href="{% url 'campaigns:posts' campaign.slug %}" class="item">
                         Posts
                     </a>
-                    <a class="item">
+                    <a href="{{ campaign.get_events_url }}" class="item">
                         Events
                     </a>
                     <div class="right menu">

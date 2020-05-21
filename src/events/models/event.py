@@ -1,15 +1,17 @@
-import uuid
+from datetime import datetime
 from django.db import models
+from django.shortcuts import reverse
+from django.utils.text import slugify
 
 from accounts.models import Member
 from campaigns.models import Campaign
-
 from events.choices import VISIBILITY_CHOICES
 
 class Event(models.Model):
-    slug = models.SlugField(unique=True, default=uuid.uuid1, blank=True)
+    slug = models.SlugField(max_length=80, unique=True, blank=True)
     name = models.CharField(max_length=255, blank=True)
-    description = models.TextField(default='', blank=True)
+    details = models.TextField(default='', blank=True)
+    location = models.CharField(max_length=200, blank=True)
     start_time = models.DateTimeField(blank=True)
     end_time = models.DateTimeField(blank=True)
     visibility = models.CharField(max_length=9, choices=VISIBILITY_CHOICES, blank=True)
@@ -23,6 +25,12 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        today = datetime.today()
+        title_slugified = slugify(self.name)
+        self.slug = f'{today:%Y%m%d%M%S}-{title_slugified}'
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'event'

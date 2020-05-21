@@ -13,5 +13,6 @@ urlpatterns = [
         path('<uuid:slug>/volunteer/', views.volunteer_request, name='volunteer-request'),
         path('<uuid:slug>/teams/', views.campaign_teams, name='teams'),
         path('<uuid:slug>/posts/', views.campaign_posts, name='posts'),
+        path('<uuid:slug>/events/', views.campaign_events, name='events'),
     ], 'campaigns'))),
 ]
