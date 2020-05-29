@@ -2,9 +2,18 @@
     display: none;
   }
 
-  .masthead.segment {
+.ui.secondary.inverted.pointing.menu {
+    border: none !important; 
+}
+
+.masthead.segment {
     min-height: 700px;
     padding: 1em 0em;
+    background-image: url(../images/highrlove.jpg) !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
   }
   .masthead .logo.item img {
     margin-right: 1em;
