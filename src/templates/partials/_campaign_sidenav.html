@@ -1,0 +1,23 @@
+<div class="ui fluid vertical menu rounded-0">
+  <a class="{% if request.resolver_match.url_name == 'idetails' %}active or-text{% endif %} item">
+    {{ campaign.title }}
+  </a>
+  <a href="{% url 'campaigns:teams' campaign.slug %}" class="{% if request.resolver_match.url_name == 'teams' %}active or-text{% endif %} item">
+    Teams
+  </a>
+  <a href="{% url 'campaigns:events' campaign.slug %}" class="{% if request.resolver_match.url_name == 'events' %}active or-text{% endif %} item">
+    Events
+  </a>
+  <a href="{% url 'campaigns:posts' campaign.slug %}" class="{% if request.resolver_match.url_name == 'posts' %}active or-text{% endif %} item">
+    Posts
+  </a>
+  <a class="item">
+    Donations
+  </a>
+  <div class="item">
+    <div class="ui transparent icon input">
+      <input type="text" placeholder="Search...">
+      <i class="search icon"></i>
+    </div>
+  </div>
+</div>

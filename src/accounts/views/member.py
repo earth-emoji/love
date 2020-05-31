@@ -7,17 +7,10 @@ from campaigns.models import Campaign
 
 @login_required
 @members_required
-def member_index(request, slug):
+def member_index(request):
     template_name = 'members/index.html'
     context = {}
-
-    if slug is None:
-        return redirect('not-found')
-    
-    member = Member.objects.get(slug=slug)
-
-    if member is None:
-        return redirect('not-found')
+    member = request.user.member
 
     campaigns = Campaign.objects.filter(initiator=member)[:5]
 
@@ -28,22 +21,13 @@ def member_index(request, slug):
 
 @login_required
 @members_required
-def initiator_campaign_list(request, slug):
+def initiator_campaign_list(request):
     template_name = "campaigns/initiator_list.html"
     context = {}
-
-    if slug is None:
-        return redirect('not-found')
-    
-    member = Member.objects.get(slug=slug)
-
-    if member is None:
-        return redirect('not-found')
-
-    if not (member == request.user.member):
-        return redirect('forbidden')
+    member = request.user.member
 
     campaigns = Campaign.objects.filter(initiator=member)
+    
     context["campaigns"] = campaigns
     context["member"] = member
     return render(request, template_name, context)

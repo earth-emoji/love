@@ -1,14 +1,17 @@
-<div class="ui fluid vertical menu">
-  <a class="active teal item">
+<div class="ui fluid vertical menu rounded-0">
+  <a class="{% if request.resolver_match.url_name == 'index' %}active or-text{% endif %} item">
+    Feed
+  </a>
+  <a href="{% url 'members:ilist' %}" class="item {% if request.resolver_match.url_name == 'ilist' %}active or-text{% endif %}">
     Campaigns
   </a>
-  <a class="teal item">
-    Tasks
-  </a>
-  <a class="teal item">
+  <a href="" class="item">
     Events
   </a>
-  <a class="teal item">
+  <a class="item">
+    Contacts
+  </a>
+  <a class="item">
     Messages
   </a>
   <div class="item">

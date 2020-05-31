@@ -3,6 +3,11 @@
     color: #fff !important;
 }
 
+.or-text,
+a.or-link {
+    color: #ff3500 !important;
+}
+
 .rounded-sm {
     border-radius: 0.2rem !important;
   }

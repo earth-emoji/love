@@ -15,18 +15,20 @@
         <a class="item">About</a>
         <a class="item">Contact</a>
         <div class="right item">
-          <a class="ui inverted button">Log in</a>
-          <a class="ui inverted button">Sign Up</a>
+          <a href="{% url 'login' %}" class="ui inverted button">Log in</a>
+          <a href="{% url 'user_signup' %}" class="ui inverted button">Sign Up</a>
         </div>
       </div>
     </div>
 
     <div class="ui text container">
-      <h1 style="text-shadow: 1px 1px #000000; letter-spacing: 8px;" class="ui inverted header">
-        HIGHR LOVE
-      </h1>
-      <h2 style="text-shadow: 1px 1px #000000; letter-spacing: 5px;">Exercise love in our world.</h2>
-      <div class="ui huge orange-red button">Get Started <i class="right arrow icon"></i></div>
+        <h1 style="text-shadow: 1px 1px #000000; letter-spacing: 8px;" class="ui inverted header">
+            HIGHR LOVE
+        </h1>
+        <h2 style="text-shadow: 1px 1px #000000; letter-spacing: 5px;">Exercise love in our world.</h2>
+        <a href="{% url 'user_signup' %}" class="ui huge orange-red button">
+            Get Started <i class="right arrow icon"></i>
+        </a>
     </div>
 
   </div>
