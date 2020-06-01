@@ -19,9 +19,7 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Funds Available</th>
-                            <th>Funds Raised</th>
-                            <th>Funds Needed</th>
+                            <th>Cause</th>
                             <th>Volunteers Needed</th>
                             <th></th>
                         </tr>
@@ -30,9 +28,7 @@
                         {% for campaign in campaigns %}
                             <tr>
                                 <td>{{ campaign.title }}</td>
-                                <td>{{ campaign.funds_available }}</td>
-                                <td>{{ campaign.funds_raised }}</td>
-                                <td>{{ campaign.funds_needed }}</td>
+                                <td>{{ campaign.cause.name }}</td>
                                 <td>{{ campaign.volunteers_needed}}</td>
                                 <td><a class="or-link" href="{% url 'campaigns:idetails' campaign.slug %}">View</a> | <a class="or-link" href="{% url 'campaigns:edit' campaign.slug %}">Edit</a></td>
                             </tr>

@@ -21,7 +21,7 @@
                 <div class="ui fluid buttons">
                     <button id="volunteer" class="ui button">Volunteer</button>
                     <div class="or"></div>
-                    <button id="donate" class="ui teal button">Donate</button>
+                    <button id="donate" class="ui orange-red button">Donate</button>
                 </div>
             </div>
         </div>
@@ -74,14 +74,14 @@
     <div class="header">Volunteer</div>
     <div class="scrolling content">
         <form id="v-form" class="ui large container form" method="POST" action="{{ campaign.volunteer_url }}">
-        {% csrf_token %}
-        <div class="field">
-            <label for="reason">Reason:</label>
-            <textarea id="reason" name="reason"></textarea>
-        </div>
-        <div class="ui divider"></div>
-        <button class="ui teal button" type="submit">Submit</button>
-    </form>
+            {% csrf_token %}
+            <div class="field">
+                <label for="reason">Reason:</label>
+                <textarea id="reason" name="reason"></textarea>
+            </div>
+            <div class="ui divider"></div>
+            <button class="ui orange-red button" type="submit">Submit</button>
+        </form>
     </div>
 </div>
 

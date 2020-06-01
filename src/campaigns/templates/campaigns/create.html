@@ -23,6 +23,11 @@
                     {{ form.description }}
                 </div>
                 <div class="field">
+                    {{ form.cause.errors }}
+                    <label for="{{ form.cause.id_for_label }}">Cause:</label>
+                    {{ form.cause }}
+                </div>
+                <div class="field">
                     {{ form.funds_needed.errors }}
                     <label for="{{ form.funds_needed.id_for_label }}">Funds Needed:</label>
                     {{ form.funds_needed }}
