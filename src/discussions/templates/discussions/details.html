@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui dividing header">{{ discussion.name }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui label"><i class="comment alternate outline icon"></i> Topics: {{ discussion.topics.count }}</div>
+                <div class="ui divider"></div>
+                <p>
+                    {{ discussion.description }}
+                </p>
+
+                <div class="">
+                    <a class="fluid ui teal button" href="{{ discussion.post_topic_url }}">Create</a>
+                </div>
+
+                <div class="ui divided items">
+                    {% for topic in discussion.get_topics %}
+                        <div class="item">
+                            <div class="content">
+                                <a href="{{ topic.get_absolute_url }}" class="header">{{ topic.name }}</a>
+                                <div class="meta">
+                                    <span class="moderator">{{ topic.moderator.user.name }}</span>
+                                </div>
+                                <div class="description">
+                                    <p>
+                                        {{ topic.description|truncatechars:255 }}
+                                    </p>
+                                </div>
+                                <div class="extra">
+                                    <div class="ui label"><i class="tags icon"></i> Tags</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}

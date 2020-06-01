@@ -1,0 +1,14 @@
+<div class="ui longer modal">
+  <div class="header">Entry</div>
+  <div class="scrolling content">
+    <form id="post-form" class="ui container form" method="POST" action="{{ topic.new_entry_url }}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        <div class="field">
+        {{ form.content }}
+        </div>
+        <div class="ui divider"></div>
+        <button class="ui teal button" type="submit">Submit</button>
+    </form>
+  </div>
+</div>

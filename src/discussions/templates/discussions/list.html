@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui dividing header">Discussions</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui divided items">
+                    {% for discussion in discussions %}
+                        <div class="item">
+                            <div class="content">
+                                <a href="{{ discussion.get_absolute_url }}" class="header">{{ discussion.name }}</a>
+                                <div class="meta">
+                                    <span class="category">Category</span>
+                                </div>
+                                <div class="description">
+                                    <p>
+                                        {{ discussion.description|truncatechars:255 }}
+                                    </p>
+                                </div>
+                                <div class="extra">
+                                    <div class="ui label"><i class="comment alternate outline icon"></i> Topics: {{ discussion.topics.count }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

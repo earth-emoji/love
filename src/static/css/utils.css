@@ -8,6 +8,11 @@ a.or-link {
     color: #ff3500 !important;
 }
 
+.segment.scrollable {
+    overflow: auto; 
+    max-height: 200px;
+}
+
 .rounded-sm {
     border-radius: 0.2rem !important;
   }
