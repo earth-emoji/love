@@ -11,7 +11,13 @@
                     <p id="success-msg"></p>
                 </div>
                 <h1 class="ui header">{{ campaign.title }}</h1>
-                <p>{{ campaign.description }}</p>
+                <div class="extra">
+                    <div class="ui label">Creator: {{ campaign.initiator.user.username }}</div>
+                    <div class="ui label"><i class="globe icon"></i> Location</div>
+                    <div class="ui label"><i class="heart icon"></i> {{ campaign.cause.name }}</div>
+                    <div class="ui label"><i class="users icon"></i> {{ campaign.volunteers_needed }} Volunteers Needed</div>
+                </div>
+                <p class="mt-3">{{ campaign.description }}</p>
             </div>
         </div>
         <div class="ui divider"></div>
@@ -40,9 +46,9 @@
                                 
                                 <form id="comment-form" class="ui reply form mt-3" method="POST" action="{{ post.post_comment_url }}">
                                     <div class="field">
-                                        <textarea id="c-content" name="c-content" required></textarea>
+                                        <input type="text" id="c-content" name="c-content" required />
                                     </div>
-                                    <button type="submit" class="ui teal labeled submit icon button">
+                                    <button type="submit" class="ui green labeled submit icon button">
                                         <i class="icon edit"></i> Add Reply
                                     </button>
                                 </form>
@@ -59,11 +65,22 @@
             </div>
 
             <div class="five wide column">
-                <h2 class="ui header">Volunteers</h2>
-                <div class="ui tiny images">
-                    {% for volunteer in volunteers %}
-                        <img src="{{ MEDIA_URL }}{{ volunteer.member.user.photo }}" class="ui image">
-                    {% endfor %}
+                <div class="ui top demo attached segment">
+                    <div class="ui header">Volunteers</div>
+                </div>
+                <div class="ui attached segment scrollable">
+                    <div class="ui tiny images">
+                        {% for volunteer in volunteers %}
+                            <img src="{{ MEDIA_URL }}{{ volunteer.member.user.photo }}" class="ui image">
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="ui top demo attached segment mt-3">
+                    <div class="ui header">Public Events</div>
+                </div>
+                <div class="ui attached segment scrollable">
+                    <p>Events</p>
                 </div>
             </div>
         </div>

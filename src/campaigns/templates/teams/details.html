@@ -14,20 +14,100 @@
                 <h1 class="ui header">{{ team.name }} Team</h1>
                 <div class="ui divider"></div>
             </div>
-            
-
+        </div>
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui breadcrumb">
+                    <a href="{% url 'members:index' %}" class="section or-link">
+                        Feed
+                    </a>
+                    <i class="right angle icon divider"></i>
+                    <a href="{% url 'members:ilist'%}" class="section or-link">
+                        Campaigns
+                    </a>
+                    <i class="right angle icon divider"></i>
+                    <a href="{% url 'campaigns:idetails' team.campaign.slug %}" class="section or-link">
+                        {{ team.campaign.title }}
+                    </a>
+                    <i class="right angle icon divider"></i>
+                    <a href="{% url 'campaigns:teams' team.campaign.slug %}" class="section or-link">
+                        Teams
+                    </a>
+                    <i class="right angle icon divider"></i>
+                    <div class="active section">{{ team.name }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <!-- Volunteers -->
             <div class="nine wide column">
-                <h2 class="ui header">Volunteers</h2>
-                <div class="ui divided items">
-                    {% for volunteer in volunteers %}
-                        {% if volunteer.member != team.leader %}
+                <div class="ui top demo attached segment">
+                    <div class="ui header">Volunteers</div>
+                </div>
+                <div class="ui attached segment deeper scrollable">
+                    <div class="ui divided items">
+                        {% for volunteer in volunteers %}
+                            {% if volunteer.member != team.leader %}
+                                <div class="item">
+                                    <div class="image">
+                                        <img src="{{ MEDIA_URL }}{{ volunteer.member.user.photo }}">
+                                    </div>
+                                    <div class="content">
+                                        <a class="header">{{ volunteer.member.user.name }}</a>
+                                        <div class="meta">
+                                            <span class="cinema">Meta</span>
+                                        </div>
+                                        <div class="description">
+                                            <p><strong>Bio:</strong> Proin consequat metus id bibendum pulvinar. Nullam semper vel nunc sed volutpat. Aliquam erat volutpat. Donec quis augue id quam egestas tincidunt at sed velit. Donec auctor dui et metus finibus rhoncus. In hac habitasse platea dictumst.</p>
+                                        </div>
+                                        <div class="extra">
+                                            <a href="{% url 'teams:members' team_slug=team.slug member_slug=volunteer.member.slug %}" class="ui mini button"><i class="user plus icon"></i> Add to Team</a>
+                                            {% if team.leader is None %}
+                                                <a href="{% url 'teams:leader' team_slug=team.slug leader_slug=volunteer.member.slug %}" class="ui mini button"><i class="users icon"></i> Make Leader</a>
+                                            {% endif %}
+                                            <button class="ui mini button"><i class="address card icon"></i> User Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <!-- Current members -->
+            <div class="seven wide column">
+                <div class="ui top demo attached segment">
+                    <div class="ui header">Members</div>
+                </div>
+                <div class="ui attached segment deeper scrollable">
+                    <div class="ui divided items">
+                        {% if team.leader != None %}
                             <div class="item">
                                 <div class="image">
-                                    <img src="{{ MEDIA_URL }}{{ volunteer.member.user.photo }}">
+                                    <img src="{{ MEDIA_URL }}{{ team.leader.user.photo }}">
                                 </div>
                                 <div class="content">
-                                    <a class="header">{{ volunteer.member.user.name }}</a>
+                                    <a class="header">{{ team.leader.user.name }}</a>
+                                    <div class="meta">
+                                        <span class="cinema">Team Lead</span>
+                                    </div>
+                                    <div class="description">
+                                        <p><strong>Bio:</strong> Proin consequat metus id bibendum pulvinar. Nullam semper vel nunc sed volutpat. Aliquam erat volutpat. Donec quis augue id quam egestas tincidunt at sed velit. Donec auctor dui et metus finibus rhoncus. In hac habitasse platea dictumst.</p>
+                                    </div>
+                                    <div class="extra">
+                                        <a href="#" class="ui mini button"><i class="user times icon"></i> Remove</a>
+                                        <button class="ui mini button"><i class="address card icon"></i> User Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% for member in team.members.all %}
+                            <div class="item">
+                                <div class="image">
+                                    <img src="{{ MEDIA_URL }}{{ member.user.photo }}">
+                                </div>
+                                <div class="content">
+                                    <a class="header">{{ member.user.name }}</a>
                                     <div class="meta">
                                         <span class="cinema">Meta</span>
                                     </div>
@@ -35,62 +115,13 @@
                                         <p><strong>Bio:</strong> Proin consequat metus id bibendum pulvinar. Nullam semper vel nunc sed volutpat. Aliquam erat volutpat. Donec quis augue id quam egestas tincidunt at sed velit. Donec auctor dui et metus finibus rhoncus. In hac habitasse platea dictumst.</p>
                                     </div>
                                     <div class="extra">
-                                        <a href="{% url 'teams:members' team_slug=team.slug member_slug=volunteer.member.slug %}" class="ui mini button"><i class="user plus icon"></i> Add to Team</a>
-                                        {% if team.leader is None %}
-                                            <a href="{% url 'teams:leader' team_slug=team.slug leader_slug=volunteer.member.slug %}" class="ui mini button"><i class="users icon"></i> Make Leader</a>
-                                        {% endif %}
+                                        <a href="#" class="ui mini button"><i class="user plus icon"></i> Add to Team</a>
                                         <button class="ui mini button"><i class="address card icon"></i> User Details</button>
                                     </div>
                                 </div>
                             </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-            <!-- Current members -->
-            <div class="seven wide column">
-                <h2 class="ui header">Members</h2>
-                <div class="ui divided items">
-                    {% if team.leader != None %}
-                        <div class="item">
-                            <div class="image">
-                                <img src="{{ MEDIA_URL }}{{ team.leader.user.photo }}">
-                            </div>
-                            <div class="content">
-                                <a class="header">{{ team.leader.user.name }}</a>
-                                <div class="meta">
-                                    <span class="cinema">Team Lead</span>
-                                </div>
-                                <div class="description">
-                                    <p><strong>Bio:</strong> Proin consequat metus id bibendum pulvinar. Nullam semper vel nunc sed volutpat. Aliquam erat volutpat. Donec quis augue id quam egestas tincidunt at sed velit. Donec auctor dui et metus finibus rhoncus. In hac habitasse platea dictumst.</p>
-                                </div>
-                                <div class="extra">
-                                    <a href="#" class="ui mini button"><i class="user times icon"></i> Remove</a>
-                                    <button class="ui mini button"><i class="address card icon"></i> User Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                    {% for member in team.members.all %}
-                        <div class="item">
-                            <div class="image">
-                                <img src="{{ MEDIA_URL }}{{ member.user.photo }}">
-                            </div>
-                            <div class="content">
-                                <a class="header">{{ member.user.name }}</a>
-                                <div class="meta">
-                                    <span class="cinema">Meta</span>
-                                </div>
-                                <div class="description">
-                                    <p><strong>Bio:</strong> Proin consequat metus id bibendum pulvinar. Nullam semper vel nunc sed volutpat. Aliquam erat volutpat. Donec quis augue id quam egestas tincidunt at sed velit. Donec auctor dui et metus finibus rhoncus. In hac habitasse platea dictumst.</p>
-                                </div>
-                                <div class="extra">
-                                    <a href="#" class="ui mini button"><i class="user plus icon"></i> Add to Team</a>
-                                    <button class="ui mini button"><i class="address card icon"></i> User Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

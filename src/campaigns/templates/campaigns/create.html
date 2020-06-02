@@ -28,6 +28,16 @@
                     {{ form.cause }}
                 </div>
                 <div class="field">
+                    {{ form.opener.errors }}
+                    <label for="{{ form.opener.id_for_label }}">Opening Statement:</label>
+                    {{ form.opener }}
+                </div>
+                <div class="field">
+                    {{ form.volunteers_needed.errors }}
+                    <label for="{{ form.volunteers_needed.id_for_label }}">Volunteers Needed:</label>
+                    {{ form.volunteers_needed }}
+                </div>
+                <div class="field">
                     {{ form.funds_needed.errors }}
                     <label for="{{ form.funds_needed.id_for_label }}">Funds Needed:</label>
                     {{ form.funds_needed }}

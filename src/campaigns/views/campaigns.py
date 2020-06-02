@@ -31,6 +31,7 @@ def campaign_create(request):
         obj = form.save(commit=False)
         obj.initiator = request.user.member
         obj.save()
+        Post.objects.create(title=obj.title, content=form.cleaned_data['opener'], campaign=obj, author=obj.initiator, is_published=True)
         return redirect('campaigns:idetails', obj.slug)
     context["form"] = form
     return render(request, template_name, context)

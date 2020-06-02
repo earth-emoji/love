@@ -9,6 +9,8 @@ class CampaignForm(forms.ModelForm):
         attrs={'class ': ''}))
     description = forms.CharField(
         strip=True, widget=forms.Textarea(attrs={'class ': ''}))
+    opener = forms.CharField(
+        strip=True, widget=forms.Textarea(attrs={'class ': ''}))
     funds_needed = forms.DecimalField(max_digits=6, decimal_places=2, widget=forms.NumberInput(
         attrs={'class': ''}))
     funds_available = forms.DecimalField(max_digits=6, decimal_places=2, widget=forms.NumberInput(
@@ -17,6 +19,7 @@ class CampaignForm(forms.ModelForm):
         queryset=Cause.objects.all(),
         choices_groupby='category'
     )
+    volunteers_needed = forms.IntegerField(max_value=100, widget=forms.NumberInput(attrs={'class': ''}))
 
     class Meta:
         model = Campaign
@@ -26,4 +29,6 @@ class CampaignForm(forms.ModelForm):
             'funds_needed',
             'funds_available',
             'cause',
+            'volunteers_needed',
+            'opener',
         ]

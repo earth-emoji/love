@@ -22,6 +22,9 @@ def volunteer_response(request, slug):
         if status == "Accept":
             volunteer.status = status
             volunteer.save()
+            campaign = volunteer.campaign
+            campaign.volunteers_needed = campaign.volunteers_needed - 1
+            campaign.save()
 
             data = {'success':True, 'message': f"{volunteer.member.user.name} has been added to {volunteer.campaign.title}"}
             return JsonResponse(data)

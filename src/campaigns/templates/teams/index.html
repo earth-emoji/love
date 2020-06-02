@@ -11,9 +11,27 @@
                 </div>
                 <h1 class="ui header">{{ campaign.title }}'s teams</h1>
                 <div class="ui divider"></div>
-                <button id="team-create" class="fluid ui teal button">Create</button>
+                <button id="team-create" class="fluid ui orange-red button rounded-0">Create</button>
                 <div class="ui divider"></div>
-                <table id="teams" class="ui table">
+                <div class="row">
+                    <div class="sixteen wide column">
+                        <div class="ui breadcrumb">
+                            <a href="{% url 'members:index' %}" class="section or-link">
+                                Feed
+                            </a>
+                            <i class="right angle icon divider"></i>
+                            <a href="{% url 'members:ilist'%}" class="section or-link">
+                                Campaigns
+                            </a>
+                            <a href="{% url 'campaigns:idetails' campaign.slug %}" class="section or-link">
+                                {{ campaign.title }}
+                            </a>
+                            <i class="right angle icon divider"></i>
+                            <div class="active section">Teams</div>
+                        </div>
+                    </div>
+                </div>
+                <table id="teams" class="ui table rounded-0">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -24,7 +42,7 @@
                         {% for team in campaign.teams.all %}
                             <tr>
                                 <td data-label="Name">{{ team.name }}</td>
-                                <td><a href="{{ team.url }}">Details</a></td>
+                                <td><a class="or-link" href="{{ team.url }}">Details</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -44,7 +62,7 @@
             </div>
             <input id="slug" name="slug" type="hidden" value="{{campaign.slug}}" />
             <div class="ui divider"></div>
-            <button class="ui teal button" type="submit">Submit</button>
+            <button class="ui orange-red button rounded-0" type="submit">Submit</button>
         </form>
     </div>
 </div>
@@ -75,17 +93,22 @@
             success: function(response) {
                  console.log(response);
                  if(response['success']) {
-                    //$("#results").css("display", "block");
-                    //$("#success-msg").html(response['message'])
+                    $("#results").css("display", "block");
+                    $("#success-msg").html(response['message'])
                     $("#t-form")[0].reset();
                     $(".ui.longer.modal").modal('hide');
                     load_data(js_url, function(json) {
                         console.log(json)
                         var tr = document.createElement('tr');
                         var tdName = document.createElement('td');
+                        var tdLink = document.createElement('td');
                         for (var i = 0; i < json.length; i++) {
+
+                            var path = `/teams/${json[i].slug}/`;
+                            var link = $(tdLink).html(`<a class='or-link' href='${path}'>Details</a>`);
                             var name = $(tdName).html(json[i].name);
-                            var row = $(tr).append(name);
+                            var row = $(tr).append(name).append(link);
+
                             $("#teams").prepend(row);
                         }
                     });

@@ -7,10 +7,11 @@
 
         <div class="row">
             <div class="sixteen wide column">
-                {% comment %} <div class="ui positive message" id="results" style="display:none;">
+                <div class="ui positive message" id="results" style="display:none;">
                     <i class="close icon"></i>
                     <p id="success-msg"></p>
-                </div> {% endcomment %}
+                </div>
+
                 <h2 class="ui header">{{ campaign.title }}</h2>
                 <p><strong>Cause:</strong> <em>{{ campaign.cause.name }}</em></p>
                 <p>{{ campaign.description }}</p>
@@ -21,12 +22,22 @@
 
         <div class="row">
             <div class="sixteen wide column">
-                {% include 'partials/_campaign_breadcrumbs.html' %}
+                <div class="ui breadcrumb">
+                    <a href="{% url 'members:index' %}" class="section or-link">
+                        Feed
+                    </a>
+                    <i class="right angle icon divider"></i>
+                    <a href="{% url 'members:ilist'%}" class="section or-link">
+                        Campaigns
+                    </a>
+                    <i class="right angle icon divider"></i>
+                    <div class="active section">{{ campaign.title }}</div>
+                </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="four wide column">
+            <div class="three wide column">
                 {% include 'partials/_campaign_sidenav.html' %}
             </div>
             <div class="seven wide column">
@@ -36,13 +47,12 @@
                         <div class="bar"></div>
                         <div class="label">74% Funded</div>
                     </div>
-                    <table class="ui basic compact table rounded-0">
+                    <table class="ui fluid basic table rounded-0">
                         <thead>
                             <tr>
-                            <th>Name</th>
-                            <th>Date Joined</th>
-                            <th>E-mail</th>
-                            <th>Called</th>
+                                <th>Name</th>
+                                <th>Date Joined</th>
+                                <th>E-mail</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,30 +60,57 @@
                                 <td>John Lilki</td>
                                 <td>September 14, 2013</td>
                                 <td>jhlilk22@yahoo.com</td>
-                                <td>No</td>
                             </tr>
                             <tr>
                                 <td>Jamie Harington</td>
                                 <td>January 11, 2014</td>
                                 <td>jamieharingonton@yahoo.com</td>
-                                <td>Yes</td>
                             </tr>
                             <tr>
                                 <td>Jill Lewis</td>
                                 <td>May 11, 2014</td>
                                 <td>jilsewris22@yahoo.com</td>
-                                <td>Yes</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="five wide column">
+            <div class="six wide column">
                 <div class="ui top demo attached segment">
-                    <div class="ui header">Volunteers</div>
+                    <div class="ui header">Volunteer Request</div>
                 </div>
                 <div class="ui attached segment scrollable">
-                    <p>Volunteers</p>
+                    <table class="ui table rounded-0">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for volunteer in volunteers %}
+                            <tr id="tr_{{ volunteer.slug }}">
+                                <td>{{ volunteer.member.get_name }}</td>
+                                <td><button type="button" id="{{ volunteer.member.slug }}" class="v-view ui button">View</button></td>
+                                <td>
+                                    <form id="{{ volunteer.slug }}" class="v-form ui form mt-2" method="POST" action="{{ volunteer.response_url }}">
+                                        <div class="fields">
+                                            <div class="sixteen wide field pt-1">
+                                                <select name="status" id="sel_{{volunteer.slug}}">
+                                                    <option selected="true" disabled="disabled">Response</option>
+                                                    <option value="Accept">Accept</option>
+                                                    <option value="Reject">Deny</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% include 'volunteers/_volunteer_modal.html' with member=volunteer.member %}
+                        {% endfor %}
+                    </tbody>
+                    </table>
                 </div>
 
                 <div class="ui top demo attached segment mt-3">
@@ -94,7 +131,17 @@
 
         $('#example1').progress();
 
-        /*$('.message .close').on('click', function() {
+        var volunteers = document.querySelectorAll(".v-view");
+
+        volunteers.forEach(function(app) {
+            app.addEventListener("click", function(event) {
+                event.preventDefault();
+                var modal = document.getElementById(`vm_${ this.id }`);
+                $(modal).modal('show');
+            });
+        });
+
+        $('.message .close').on('click', function() {
             $(this)
                 .closest('.message')
                 .transition('fade');
@@ -125,7 +172,7 @@
                     }
                 });
             });
-        });*/
+        });
 
     });
 </script>
