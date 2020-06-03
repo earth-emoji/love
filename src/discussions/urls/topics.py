@@ -7,6 +7,6 @@ urlpatterns = [
         path('<slug:slug>/', views.topic_thread, name='thread'),
     ], 'topics'))),
     path('api/topics/', include(([
-        path('<slug:slug>/entries', views.entry_collection, name='entries'),
+        path('<slug:slug>/entries', views.conversation_collection, name='conversations'),
     ], 'topics-api'))),
 ]

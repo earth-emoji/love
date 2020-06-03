@@ -1,4 +1,4 @@
 from .discussions import *
 from .topics import *
-from .entries import *
+from .conversations import *
 from .replies import *

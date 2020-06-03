@@ -12,7 +12,6 @@ class Topic(models.Model):
     name = models.CharField(max_length=60, blank=True)
     description = models.TextField(blank=True)
     tags = models.ManyToManyField(Tag, related_name='topics', blank=True)
-    moderator = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='topics', blank=True)
     discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, related_name='topics', blank=True)
 
     def __str__(self):
@@ -21,11 +20,11 @@ class Topic(models.Model):
     def get_absolute_url(self):
         return reverse("topics:thread", kwargs={"slug": self.slug})
 
-    def new_entry_url(self):
-        return reverse("topics-api:entries", kwargs={"slug": self.slug})
+    def new_conversations_url(self):
+        return reverse("topics-api:conversations", kwargs={"slug": self.slug})
 
-    def get_entries(self):
-        return self.entries.filter(topic=self)
+    def get_conversations(self):
+        return self.conversations.filter(topic=self)
 
     def save(self, *args, **kwargs):
         today = datetime.today()

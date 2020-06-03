@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 
 from users.decorators import members_required
-from discussions.models import Entry, Reply
+from discussions.models import Conversation, Reply
 from discussions.serializers import RepliesSerializer, ReplySerializer
 
 @login_required
@@ -13,19 +13,19 @@ from discussions.serializers import RepliesSerializer, ReplySerializer
 @api_view(['GET', 'POST'])
 def reply_collection(request, slug):
     try:
-        entry = Entry.objects.get(slug=slug)
-    except Entry.DoesNotExist:
+        conversation = Conversation.objects.get(slug=slug)
+    except Conversation.DoesNotExist:
         return JsonResponse({'message': 'Record does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        replies = Reply.objects.filter(entry=entry).order_by('-created_at')
+        replies = Reply.objects.filter(conversation=conversation).order_by('-created_at')
         serializer = ReplySerializer(replies, many=True)
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
         data = {
             'content': request.data.get('c-content'),
-            'entry_pk': entry.pk,
+            'conversation_pk': conversation.pk,
             'author_pk': request.user.member.pk
         }
         serializer = ReplySerializer(data=data)
@@ -51,7 +51,7 @@ def replies_collection(request, slug):
     elif request.method == 'POST':
         data = {
             'content': request.data.get('reply-content'),
-            'entry_pk': reply.entry.pk,
+            'conversation_pk': reply.conversation.pk,
             'author_pk': request.user.member.pk,
             'parent_pk': reply.pk,
         }

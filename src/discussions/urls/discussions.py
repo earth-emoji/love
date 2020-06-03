@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from forums import views
+from discussions import views
 
 urlpatterns = [
     path('discussions/', include(([

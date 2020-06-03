@@ -1,2 +1,2 @@
 from .replies import *
-from .entries import *
+from .conversations import *

@@ -1,3 +1,72 @@
+@font-face { font-family: Roboto-Thin; src: url(../fonts/roboto/Roboto-Thin.ttf); }
+@font-face { font-family: Roboto-Light; src: url(../fonts/roboto/Roboto-Light.ttf); }
+@font-face { font-family: Roboto-Regular; src: url(../fonts/roboto/Roboto-Regular.ttf); }
+
+body {
+    font-family: Roboto-Light;
+}
+
+.ui.header, 
+.ui.button, 
+.ui.modal>.header, 
+.ui.items>.item>.content>.header, 
+h1, h2, h3, h4, h5 {
+    font-family: Roboto-Regular !important;
+}
+
+.ui.menu, .ui.text.container,
+.ui.form input:not([type]), 
+.ui.form input[type=date], 
+.ui.form input[type=datetime-local], 
+.ui.form input[type=email], 
+.ui.form input[type=file], 
+.ui.form input[type=number], 
+.ui.form input[type=password], 
+.ui.form input[type=search], 
+.ui.form input[type=tel], 
+.ui.form input[type=text], 
+.ui.form input[type=time], 
+.ui.form input[type=url] {
+    font-family: Roboto-Light !important;
+}
+
+.viking {
+    background-color: rgb(79,163,190) !important;
+    color: white !important;
+}
+
+.viking-txt {
+    color: rgb(79,163,190) !important;
+}
+
+.studio {
+    background-color: rgb(131,77,166) !important;
+    color: white !important;
+}
+
+.studio-txt {
+    color: rgb(131,77,166) !important;
+}
+
+.black-russian {
+    background-color: rgb(14,13,19) !important;
+    color: white !important;
+}
+
+.black-russian-txt {
+    color: rgb(14,13,19) !important;
+}
+
+.dandelion {
+    background-color: #f0e130 !important;
+    color: white !important;
+}
+
+.ui.menu.black-russian .item {
+    color: white !important;
+}
+
+
 .orange-red {
     background-color: #ff3500 !important;
     color: #fff !important;

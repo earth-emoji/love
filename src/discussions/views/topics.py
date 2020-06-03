@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from users.decorators import members_required
 from discussions.models import Discussion, Topic
-from discussions.forms import TopicForm, EntryForm
+from discussions.forms import TopicForm, ConversationForm
 
 @login_required
 @members_required
@@ -48,7 +48,7 @@ def topic_thread(request, slug):
     if topic is None:
         return redirect('not-found')
 
-    form = EntryForm()
+    form = ConversationForm()
 
     context['topic'] = topic
     context['form'] = form
