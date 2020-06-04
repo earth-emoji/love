@@ -153,24 +153,4 @@ def campaign_posts(request, slug):
     context["posts"] = posts
     return render(request, template_name, context)
 
-@login_required
-@members_required
-def campaign_events(request, slug):
-    template_name = 'campaigns/events.html'
-    context = {}
-
-    if slug is None or slug == "":
-        return redirect('not-found')
-
-    campaign = Campaign.objects.get(slug=slug)
-
-    if campaign is None:
-        return redirect('not-found')
-
-    if not(campaign.initiator == request.user.member):
-        return redirect('forbidden')
-
-    context["campaign"] = campaign
-
-    return render(request, template_name, context)
 

@@ -30,32 +30,23 @@
                 <div class="ui divider"></div>
 
                 <div class="">
-                    <button id="new-post" type="button" class="fluid ui teal button">Post</button>
+                    <a id="new-conversation" href="{% url 'topics:new-conversation' topic.slug %}" class="fluid ui orange-red button rounded-0">New Conversation</a>
                 </div>
 
-                <div id="posts">
-                    {% for post in topic.get_entries %}
+                <div id="conversations">
+                    {% for conversation in topic.get_conversations %}
                         <div class="ui fluid card my-3">
                             <div class="content">
-                                <div class="header"><img class="ui avatar image" src="{{ MEDIA_URL }}{{ post.author.user.photo }}"> {{ post.author.user.name }}</div>
-                                <div class="meta">{{ post.timelapse }}</div>
+                                <div class="header"><img class="ui avatar image" src="{{ conversation.author.get_avatar}}"> {{ conversation.author.get_name }}</div>
+                                <div class="meta">{{ conversation.timelapse }}</div>
                                 <div class="description">
-                                    {{ post.content|safe }}
+                                    {{ conversation.title }}
+                                    {{ conversation.content|safe|truncatechars:100 }}
                                 </div>
-                                <form id="comment-form" class="ui reply form py-3" method="POST" action="{{ post.entry_reply_url }}">
-                                    {% csrf_token %}
-                                    <div class="field">
-                                        <input id="c-content" name="c-content" required />
-                                    </div>
-                                    <button type="submit" class="ui blue labeled submit icon button">
-                                        <i class="icon edit"></i> Add Reply
-                                    </button>
-                                </form>
-                                {% include 'replies/_replies.html' %}
                             </div>
                             <div class="extra content">
                                 <i class="check icon"></i>
-                                121 Votes
+                                Replies: {{ conversation.replies.count }}
                             </div>
                         </div>
                     {% endfor %}
@@ -64,7 +55,6 @@
         </div>
     </div>
 </div>
-{% include 'entries/_entry_modal.html' %}
 {% endblock content %}
 
 {% block javascript %}
@@ -75,7 +65,7 @@
             $(".longer.modal").modal("show");
         });
 
-        $("#post-form").on("submit", function(e) {
+        /*$("#post-form").on("submit", function(e) {
             e.preventDefault();
             $.ajax({
                 data: $(this).serialize(),
@@ -226,7 +216,7 @@
                     }
                 });
             })
-        });
+        });*/
     });
 </script>
 {% endblock javascript %}

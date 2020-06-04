@@ -36,8 +36,8 @@ def topic_create(request, slug):
 
 @login_required
 @members_required
-def topic_thread(request, slug):
-    template_name = 'topics/thread.html'
+def topic_details(request, slug):
+    template_name = 'topics/details.html'
     context = {}
 
     if slug is None or slug == '':

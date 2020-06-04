@@ -13,6 +13,5 @@ urlpatterns = [
         path('<slug:slug>/volunteer/', views.volunteer_request, name='volunteer-request'),
         path('<slug:slug>/teams/', views.campaign_teams, name='teams'),
         path('<slug:slug>/posts/', views.campaign_posts, name='posts'),
-        path('<slug:slug>/events/', views.campaign_events, name='events'),
     ], 'campaigns'))),
 ]

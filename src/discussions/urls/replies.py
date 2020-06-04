@@ -5,5 +5,5 @@ from discussions import views
 urlpatterns = [
     path('api/replies/', include(([
         path('<uuid:slug>/reply/', views.replies_collection, name='reply'),
-    ], 'comments-api'))),
+    ], 'replies-api'))),
 ]

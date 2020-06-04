@@ -13,6 +13,32 @@ from events.models import Event
 from events.serializers import EventSerializer
 from events.pagination import StandardResultsSetPagination
 
+@login_required
+@members_required
+def create_events(request):
+    template_name = "events/form.html"
+    context = {}
+    if request.method == "POST":
+        form = EventForm(request.POST or None)
+        if form.is_valid():
+            c = form.save(commit=False)
+            c.creator = request.user.member
+            c.save()
+            return redirect('events:user-events')
+    else:
+        form = EventForm()
+    context["form"] = form
+    return render(request, template_name, context)
+
+@login_required
+@members_required
+def user_events(request):
+    template_name = 'events/user_events.html'
+    context = {}
+    events = Event.objects.filter(creator=request.user.member).order_by('-created_at')
+    context["events"] = events
+    return render(request, template_name, context)
+
 
 class EventListing(ListAPIView):
     # set the pagination and serializer class
@@ -22,9 +48,8 @@ class EventListing(ListAPIView):
 
     def get_queryset(self):
         # filter the queryset based on the filters applied
-        campaign = Campaign.objects.get(slug=self.request.query_params.get('campaign', None))
 
-        query_list = Event.objects.filter(campaign=campaign).order_by("-start_time")
+        query_list = Event.objects.filter(creator=self.request.user.member).order_by("-start_time")
 
         visibility = self.request.query_params.get('visibility', None)
         event_day = self.request.query_params.get('day', None)
@@ -41,19 +66,17 @@ class EventListing(ListAPIView):
             query_list = query_list.order_by("-start_time")
         return query_list
 
-def get_visibility(request, slug):
-    campaign = Campaign.objects.get(slug=slug)
+def get_visibility(request):
     if request.method == "GET" and request.is_ajax():
-        events = Event.objects.filter(campaign=campaign).exclude(visibility__exact='').order_by('-start_time').distinct()
+        events = Event.objects.filter(creator=request.user.member).exclude(visibility__exact='').order_by('-start_time').distinct()
         data = {
             "events": events,
         }
         return JsonResponse(data, status=200)
 
-def get_event_day(request, slug):
-    campaign = Campaign.objects.get(slug=slug)
+def get_event_day(request):
     if request.method == "GET" and request.is_ajax():
-        events = Event.objects.filter(campaign=campaign).exclude(start_time__date__lt=date.today()).order_by('-start_time').distinct()
+        events = Event.objects.filter(creator=request.user.member).exclude(start_time__date__lt=date.today()).order_by('-start_time').distinct()
         data = {
             "events": events,
         }

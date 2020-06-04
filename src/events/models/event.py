@@ -4,7 +4,6 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 
 from accounts.models import Member
-from campaigns.models import Campaign
 from events.choices import VISIBILITY_CHOICES
 
 class Event(models.Model):
@@ -20,8 +19,11 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='events', blank=True)
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='events', blank=True)
     attendees = models.ManyToManyField(Member, related_name='events_attended', blank=True)
+
+    @property
+    def get_listing_api(self):
+        return reverse("events-api:listing")
 
     def __str__(self):
         return self.name

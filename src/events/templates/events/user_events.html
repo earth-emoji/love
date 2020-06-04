@@ -7,22 +7,21 @@
 {% block content %}
 
 <div class="ui container">
-    <!--#e8e8e8 teal: #00b5ad -->
     <div class="ui padded grid">
         <div class="row">
             <div class="sixteen wide column">
-                <h1 class="ui header">{{ campaign.title }}'s Events</h1>
+                <h1 class="ui header">{{ request.user.name }}'s Events</h1>
             </div>
         </div>
 
         <div class="row">
             <div class="sixteen wide column">
-                <button
-                    type="button"
+                <a
+                    href="{% url 'events:create-event' %}"
                     id="new-event"
                     class="ui orange-red button fluid rounded-0">
                     New Event
-                </button>
+                </a>
             </div>
         </div>
 
@@ -100,7 +99,7 @@
                 <div id="no_results">
                     <h5>No results found</h5>
                 </div>
-                <table class="ui striped table" id="list_data" data-url="{{ campaign.get_events_api_url }}">
+                <table class="ui striped table" id="list_data" data-url="/api/events/">
                     <thead>
                       <tr>
                         <th>Name</th>
@@ -111,7 +110,7 @@
                       </tr>
                     </thead>
                     <tbody id="listing">
-                        {% for event in campaign.get_events %}
+                        {% for event in events %}
                             <tr>
                                 <td>{{ event.name }}</td>
                                 <td>{{ event.location }}</td>

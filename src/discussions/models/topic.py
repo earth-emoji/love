@@ -18,10 +18,10 @@ class Topic(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("topics:thread", kwargs={"slug": self.slug})
+        return reverse("topics:details", kwargs={"slug": self.slug})
 
     def new_conversations_url(self):
-        return reverse("topics-api:conversations", kwargs={"slug": self.slug})
+        return reverse("topics:new-conversation", kwargs={"slug": self.slug})
 
     def get_conversations(self):
         return self.conversations.filter(topic=self)

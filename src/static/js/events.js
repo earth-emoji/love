@@ -1,9 +1,6 @@
 var send_data = {}
 
 $(document).ready(function () {
-    let winloc = window.location.href;
-    
-    send_data['campaign'] = winloc.split("/")[4];
     
     // reset all parameters on page load
     resetFilters();

@@ -5,8 +5,38 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from users.decorators import members_required
+from discussions.forms import ConversationForm
 from discussions.models import Topic, Conversation
 from discussions.serializers import ConversationSerializer
+
+@login_required
+@members_required
+def create_conversation(request, slug):
+    template_name = 'conversations/form.html'
+    context = {}
+
+    if slug is None or slug == "":
+        return redirect('not-found')
+
+    topic = Topic.objects.get(slug=slug)
+
+    if topic is None:
+        return redirect('not-found')
+
+    if request.method == 'POST':
+        form = ConversationForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            c = form.save(commit=False)
+            c.author = request.user.member
+            c.topic = topic
+            c.save()
+            return redirect(topic.get_absolute_url())
+    else:
+        form = ConversationForm()
+
+    context["form"] = form
+    context["topic"] = topic
+    return render(request, template_name, context)
 
 @login_required
 @members_required

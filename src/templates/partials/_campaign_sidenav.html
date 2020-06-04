@@ -5,9 +5,6 @@
   <a href="{% url 'campaigns:teams' campaign.slug %}" class="{% if request.resolver_match.url_name == 'teams' %}active or-text{% endif %} item">
     Teams
   </a>
-  <a href="{% url 'campaigns:events' campaign.slug %}" class="{% if request.resolver_match.url_name == 'events' %}active or-text{% endif %} item">
-    Events
-  </a>
   <a href="{% url 'campaigns:posts' campaign.slug %}" class="{% if request.resolver_match.url_name == 'posts' %}active or-text{% endif %} item">
     Posts
   </a>

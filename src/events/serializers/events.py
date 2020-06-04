@@ -9,9 +9,6 @@ class EventSerializer(serializers.ModelSerializer):
     creator_pk = serializers.PrimaryKeyRelatedField(
         queryset=Member.objects.all(), source='creator', write_only=True
     )
-    campaign_pk = serializers.PrimaryKeyRelatedField(
-        queryset=Campaign.objects.all(), source='campaign', write_only=True
-    )
     serialized_date = serializers.SerializerMethodField()
 
     def get_serialized_date(self, obj):
@@ -29,8 +26,6 @@ class EventSerializer(serializers.ModelSerializer):
             'visibility',
             'created_at',
             'serialized_date',
-            'campaign',
-            'campaign_pk',
             'creator',
             'creator_pk'
         )
