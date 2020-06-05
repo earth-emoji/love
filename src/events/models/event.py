@@ -27,7 +27,11 @@ class Event(models.Model):
 
     @property
     def formatted_start_time(self):
-        return datetime.strftime(self.start_time, "%m-%d-%Y %I:%M %p")
+        return datetime.strftime(self.start_time, "%A, %B %d, %Y, %I:%M %p")
+
+    @property
+    def formatted_end_time(self):
+        return datetime.strftime(self.end_time, "%A, %B %d, %Y, %I:%M %p")
 
     def __str__(self):
         return self.name

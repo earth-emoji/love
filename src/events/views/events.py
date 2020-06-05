@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from rest_framework.generics import ListAPIView
 
 from accounts.models import Member
@@ -12,6 +12,16 @@ from events.forms import EventForm
 from events.models import Event
 from events.serializers import EventSerializer
 from events.pagination import StandardResultsSetPagination
+
+@login_required
+@members_required
+def public_events(request):
+    template_name = 'events/public_events.html'
+    context = {}
+
+    events = Event.objects.filter(visibility='Public')
+    context['events'] = events
+    return render(request, template_name, context)
 
 @login_required
 @members_required
@@ -41,7 +51,6 @@ def user_events(request):
     events = Event.objects.filter(creator=request.user.member).order_by('-created_at')
     context["events"] = events
     return render(request, template_name, context)
-
 
 class EventListing(ListAPIView):
     # set the pagination and serializer class
@@ -84,3 +93,13 @@ def get_event_day(request):
             "events": events,
         }
         return JsonResponse(data, status=200)
+
+@login_required
+@members_required
+def attend_event(request):
+    if request.method == "POST" and request.is_ajax():
+        event = Event.objects.get(slug=request.POST['slug'])
+        event.attendees.add(request.user.member)
+        data = {'success':True, 'message': "You have been added to the event."}
+        return JsonResponse(data, status=200)
+    return HttpResponse("")
