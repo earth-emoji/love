@@ -74,8 +74,8 @@ function putTableData(result) {
             row = "<tr> <td>" + b.name + "</td>" +
                 "<td>" + b.location + "</td>" +
                 "<td>" + b.visibility + "</td>" +
-                "<td>" + b.start_time + "</td>" +
-                "<td>" + b.end_time + "</td>"
+                "<td>" + formatServerDateTime(b.start_time)+ "</td>" +
+                "<td>" + formatServerDateTime(b.end_time)+ "</td></tr>"
             $("#listing").append(row);
         });
     }
@@ -108,6 +108,25 @@ function putTableData(result) {
     $("#next").data("url", result["next"]);
     // displaying result count
     $("#result-count span").html(result["count"]);
+}
+
+function formatServerDateTime(datetime) {
+
+    date = new Date(datetime);
+
+    var formatter = new Intl.DateTimeFormat('en-us', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+        timeZone: 'UTC'
+      });
+      
+    return formatter.format(date);
+
 }
 
 function getAPIData() {

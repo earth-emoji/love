@@ -25,6 +25,10 @@ class Event(models.Model):
     def get_listing_api(self):
         return reverse("events-api:listing")
 
+    @property
+    def formatted_start_time(self):
+        return datetime.strftime(self.start_time, "%m-%d-%Y %I:%M %p")
+
     def __str__(self):
         return self.name
 

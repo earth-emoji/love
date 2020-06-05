@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
@@ -22,6 +22,9 @@ def create_events(request):
         form = EventForm(request.POST or None)
         if form.is_valid():
             c = form.save(commit=False)
+            # 2020-06-04 14:26
+            # c.start_time = datetime.fromtimestamp(form.cleaned_data['start_time'])
+            # c.end_time = datetime.strptime(form.cleaned_data['end_time'])
             c.creator = request.user.member
             c.save()
             return redirect('events:user-events')
