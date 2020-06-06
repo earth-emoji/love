@@ -11,9 +11,9 @@ class CampaignForm(forms.ModelForm):
         strip=True, widget=forms.Textarea(attrs={'class ': ''}))
     opener = forms.CharField(
         strip=True, widget=forms.Textarea(attrs={'class ': ''}))
-    funds_needed = forms.DecimalField(max_digits=6, decimal_places=2, widget=forms.NumberInput(
+    funds_needed = forms.DecimalField(max_digits=11, decimal_places=2, widget=forms.NumberInput(
         attrs={'class': ''}))
-    funds_available = forms.DecimalField(max_digits=6, decimal_places=2, widget=forms.NumberInput(
+    funds_available = forms.DecimalField(max_digits=11, decimal_places=2, widget=forms.NumberInput(
         attrs={'class': ''}))
     cause = GroupedModelChoiceField(
         queryset=Cause.objects.all(),

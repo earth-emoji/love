@@ -37,12 +37,40 @@
         </div>
 
         <div class="row">
-            <div class="three wide column">
-                {% include 'partials/_campaign_sidenav.html' %}
+            <div class="nine wide column">
+                <button id="post-form" type="button" class="ui fluid orange-red button rounded-0 mb-3">Post</button>
+                <div id="posts">
+                    {% for post in campaign.get_posts %}
+                        <div class="ui fluid card rounded-0">
+                            <div class="content">
+                                <div class="header">{{ post.title }}</div>
+                                <div class="meta">{{ post.timelapse }}</div>
+                                <div class="description">
+                                    {{ post.content }}
+                                </div>
+                                
+                                <!--<form id="comment-form" class="ui reply form mt-3" method="POST" action="{{ post.post_comment_url }}">
+                                    <div class="field">
+                                        <input type="text" id="c-content" name="c-content" required />
+                                    </div>
+                                    <button type="submit" class="ui green labeled submit icon button">
+                                        <i class="icon edit"></i> Add Reply
+                                    </button>
+                                </form>-->
+                            </div>
+                            <div class="extra content">
+                                <i class="check icon"></i>
+                                121 Votes
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
             <div class="seven wide column">
-                <div class="ui segment rounded-0">
-                    <h2 class="ui header">Donations</h2>
+                <div class="ui top demo attached segment">
+                    <div class="ui header">Donations</div>
+                </div>
+                <div class="ui attached segment scrollable">
                     <div class="ui green progress" data-percent="74" id="example1">
                         <div class="bar"></div>
                         <div class="label">74% Funded</div>
@@ -74,9 +102,8 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="six wide column">
-                <div class="ui top demo attached segment">
+
+                <div class="ui top demo attached segment mt-3">
                     <div class="ui header">Volunteer Request</div>
                 </div>
                 <div class="ui attached segment scrollable">

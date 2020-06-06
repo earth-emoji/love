@@ -30,18 +30,22 @@
                 <div class="ui divider"></div>
 
                 <div class="">
-                    <a id="new-conversation" href="{% url 'topics:new-conversation' topic.slug %}" class="fluid ui orange-red button rounded-0">New Conversation</a>
+                    <a id="new-conversation" style="box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5; background-color: white; color:#ff3500;" href="{% url 'topics:new-conversation' topic.slug %}" class="fluid ui button rounded-0">New Conversation</a>
                 </div>
 
                 <div id="conversations">
                     {% for conversation in topic.get_conversations %}
-                        <div class="ui fluid card my-3">
+                        <div class="ui fluid card my-3 rounded-0">
                             <div class="content">
-                                <div class="header"><img class="ui avatar image" src="{{ conversation.author.get_avatar}}"> {{ conversation.author.get_name }}</div>
-                                <div class="meta">{{ conversation.timelapse }}</div>
+                                <div class="header pb-2">
+                                    <a class="black-russian-txt">{{ conversation.title }}</a>
+                                </div>
+                                <div class="meta">
+                                    Created by: <a class="or-link">{{ conversation.author.get_name }}</a> {{ conversation.timelapse }}
+                                </div>
+                                
                                 <div class="description">
-                                    {{ conversation.title }}
-                                    {{ conversation.content|safe|truncatechars:100 }}
+                                    {{ conversation.content|safe|truncatechars_html:100 }}
                                 </div>
                             </div>
                             <div class="extra content">
