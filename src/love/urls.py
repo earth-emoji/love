@@ -27,6 +27,7 @@ urlpatterns = [
     path('', include('posts.urls')),
     path('', include('events.urls')),
     path('', include('discussions.urls')),
+    path('', include('notifi.urls')),
     path('summernote/', include('django_summernote.urls')),
 ]
 if settings.DEBUG:

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'rest_framework',
     'corsheaders',
     'users',
@@ -66,6 +67,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'love.urls'
+ASGI_APPLICATION = 'love.routing.application'
 
 TEMPLATES = [
     {
@@ -193,3 +195,12 @@ SUMMERNOTE_CONFIG = {
 
 # From Django 3.0, this setting is necessary for iframe
 # X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
