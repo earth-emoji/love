@@ -15,14 +15,14 @@
                 </a>
                 <div class="metadata">
                     <span class="date">
-                        Created at: {{ comment.created_at }}
+                        Created on: {{ comment.created_at }}
                     </span>
                 </div>
                 <div class="text">
                     <p>{{ comment.content }}</p>
                 </div>
                 
-                <form id="{{ comment.slug }}" class="ui fluid reply form mt-3 reply-form" method="POST" action="{{ comment.post_reply_url }}">
+                <!-- <form id="{{ comment.slug }}" class="ui fluid reply form mt-3 reply-form" method="POST" action="{{ comment.post_reply_url }}">
                     {% csrf_token %}
                     <div class="field">
                         <input type="text" name="reply-content" />
@@ -30,7 +30,7 @@
                     <button type="submit" class="ui green labeled submit icon button">
                         <i class="icon edit"></i> Add Reply
                     </button>
-                </form>
+                </form> -->
             </div>
             <div id="r_{{comment.slug}}" class="comments">
                 {% for reply in comment.get_replies %}

@@ -12,6 +12,42 @@ from posts.serializers import PostSerializer
 
 @login_required
 @members_required
+def post_details(request, slug):
+    template_name = 'posts/post_details.html'
+    context = {}
+
+    if slug is None or slug == "":
+        return redirect('not-found')
+
+    post = Post.objects.get(slug=slug)
+
+    if post is None:
+        return redirect('not-found')
+    
+    context['post'] = post
+    
+    return render(request, template_name, context)
+
+@login_required
+@members_required
+def campaign_post_details(request, slug):
+    template_name = 'posts/cpost_details.html'
+    context = {}
+
+    if slug is None or slug == "":
+        return redirect('not-found')
+
+    post = Post.objects.get(slug=slug)
+
+    if post is None:
+        return redirect('not-found')
+    
+    context['post'] = post
+
+    return render(request, template_name, context)
+
+@login_required
+@members_required
 @api_view(['GET', 'POST'])
 def post_collection(request, slug):
     try:

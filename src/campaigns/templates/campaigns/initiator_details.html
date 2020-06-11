@@ -43,7 +43,7 @@
                     {% for post in campaign.get_posts %}
                         <div class="ui fluid card rounded-0">
                             <div class="content">
-                                <div class="header">{{ post.title }}</div>
+                                <div class="header"><a href="{{ post.get_campaign_post_details_url }}" >{{ post.title }}</a></div>
                                 <div class="meta">{{ post.timelapse }}</div>
                                 <div class="description">
                                     {{ post.content }}
@@ -150,6 +150,7 @@
         </div>
     </div>
 </div>
+
 {% endblock content %}
 
 {% block javascript %}
@@ -157,6 +158,26 @@
     $(document).ready(function() {
 
         $('#example1').progress();
+
+        //Get the button:
+        //mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        /*window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }*/
 
         var volunteers = document.querySelectorAll(".v-view");
 

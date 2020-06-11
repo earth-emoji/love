@@ -4,6 +4,7 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 
 from accounts.models import Member
+from campaigns.models import Campaign
 from discussions.models import Topic
 
 class Conversation(models.Model):
