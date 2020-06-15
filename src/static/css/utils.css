@@ -30,6 +30,10 @@ h1, h2, h3, h4, h5 {
     font-family: Roboto-Light !important;
 }
 
+.gamboge {
+    background-color: rgb(237,145,9);
+}
+
 .viking {
     background-color: rgb(79,163,190) !important;
     color: white !important;

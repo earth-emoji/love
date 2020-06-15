@@ -17,7 +17,7 @@ class CampaignForm(forms.ModelForm):
         attrs={'class': ''}))
     cause = GroupedModelChoiceField(
         queryset=Cause.objects.all(),
-        choices_groupby='category'
+        choices_groupby='classification'
     )
     volunteers_needed = forms.IntegerField(max_value=100, widget=forms.NumberInput(attrs={'class': ''}))
 

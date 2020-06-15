@@ -38,6 +38,10 @@ class Member(models.Model):
     def get_sex(self):
         return self.user.sex
 
+    @property
+    def get_basket_count(self):
+        return self.basket.items.count()
+
     def __str__(self):
         return self.user.username
 

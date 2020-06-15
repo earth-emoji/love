@@ -4,7 +4,7 @@ from django.utils.text import slugify
 
 # from classifications.choices import CONTENT_TYPE_CHOICES
 
-class Category(models.Model):
+class Classification(models.Model):
     slug = models.SlugField(max_length=80, unique=True, blank=True)
     name = models.CharField(max_length=60, unique=True, blank=True)
     # content_type = models.CharField(max_length=10, choices=CONTENT_TYPE_CHOICES, blank=True)
@@ -17,5 +17,5 @@ class Category(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'category'
-        verbose_name_plural = 'categories'
+        verbose_name = 'classification'
+        verbose_name_plural = 'classifications'

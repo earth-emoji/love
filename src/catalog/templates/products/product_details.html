@@ -1,0 +1,34 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="ui container">
+
+    <div class="row">
+        <div class="sixteen wide column">
+            <h1 class="ui header">{{ product.name }}</div>
+
+            <div class="ui top attached tabular menu">
+                {% include 'products/_tab_headers.html' with details=True %}
+            </div>
+            <div class="ui bottom attached active tab segment" data-tab="first">
+                {% include 'products/_details_form.html' %}
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="second">
+                Second
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="third">
+                Third
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function() {
+        //$('.menu .item').tab();
+    });
+</script>
+{% endblock javascript %}

@@ -1,6 +1,6 @@
 DB_CONFIG = {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'dennea',
+    'NAME': 'love',
     'USER': 'postgres',
     'PASSWORD': 'EdwardD@1st',
     'HOST': 'localhost',

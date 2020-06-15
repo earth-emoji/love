@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import datetime
+from utils import DB_CONFIG
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'notifi',
     'posts',
     'events',
+    'catalog',
+    'shopping_cart',
     'django_summernote',
 ]
 
@@ -94,12 +96,12 @@ WSGI_APPLICATION = 'love.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'love',
-        'USER': 'postgres',
-        'PASSWORD': 'Password',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': DB_CONFIG['ENGINE'],
+        'NAME': DB_CONFIG['NAME'],
+        'USER': DB_CONFIG['USER'],
+        'PASSWORD': DB_CONFIG['PASSWORD'],
+        'HOST': DB_CONFIG['HOST'],
+        'PORT': DB_CONFIG['PORT'],
     }
 }
 
