@@ -1,0 +1,200 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui dividing header">
+                    {{ member.user.name }}'s Activity
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="four wide column">
+                {% include 'partials/_sidenav.html' %}
+            </div>
+            <div class="seven wide column">
+                <div class="ui feed segment rounded-0">
+                    <h4 class="ui header">Feed</h4>
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <a class="or-link">Elliot Fu</a> added
+                                <a class="or-link">Jenny Hess</a> as a friend
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <a class="or-link">Stevie Feliciano</a> added
+                                <a class="or-link">Elliot Fu</a> as a friend
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <a class="or-link">Helen Troy</a> added
+                                <a class="or-link">Christian Rocha</a> as a
+                                friend
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <a class="or-link">Christian Rocha</a> signed up
+                                for the site.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="five wide column">
+                <div class="ui top demo attached segment">
+                    <div class="ui header">Campaign Recommedations</div>
+                </div>
+                <div class="ui attached segment scrollable">
+                    <div class="ui feed">
+                        <div class="event">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added <a class="or-link">Jenny Hess</a> to your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event mt-3">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added
+                                    <a class="or-link">Jenny Hess</a> to
+                                    your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event mt-3">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added
+                                    <a class="or-link">Jenny Hess</a> to your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event mt-3">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added
+                                    <a class="or-link">Jenny Hess</a> to your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event mt-3">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added
+                                    <a class="or-link">Jenny Hess</a> to your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui top demo attached segment mt-3">
+                    <div class="ui header">Upcoming Events</div>
+                </div>
+                <div class="ui attached segment scrollable">
+                    <div class="ui feed">
+                        <div class="event">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added <a class="or-link">Jenny Hess</a> to your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event mt-3">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added
+                                    <a class="or-link">Jenny Hess</a> to
+                                    your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event mt-3">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added
+                                    <a class="or-link">Jenny Hess</a> to your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event mt-3">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added
+                                    <a class="or-link">Jenny Hess</a> to your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event mt-3">
+                            <div class="content">
+                                <div class="date">
+                                    3 days ago
+                                </div>
+                                <div class="summary">
+                                    You added
+                                    <a class="or-link">Jenny Hess</a> to your
+                                    <a class="or-link">coworker</a> group.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+
+        <div class="row">
+            <h2 class="ui header">
+                Create Campaign
+            </h2>
+        </div>
+        <div class="row">
+            <form class="ui large container form" method="POST" novalidate>
+                {% csrf_token %}
+                <div class="field">
+                    {{ form.title.errors }}
+                    <label for="{{ form.title.id_for_label }}">Title:</label>
+                    {{ form.title }}
+                </div>
+                <div class="field">
+                    {{ form.description.errors }}
+                    <label for="{{ form.description.id_for_label }}">Description:</label>
+                    {{ form.description }}
+                </div>
+                <div class="field">
+                    {{ form.cause.errors }}
+                    <label for="{{ form.cause.id_for_label }}">Cause:</label>
+                    {{ form.cause }}
+                </div>
+                <div class="field">
+                    {{ form.opener.errors }}
+                    <label for="{{ form.opener.id_for_label }}">Opening Statement:</label>
+                    {{ form.opener }}
+                </div>
+                <div class="field">
+                    {{ form.volunteers_needed.errors }}
+                    <label for="{{ form.volunteers_needed.id_for_label }}">Volunteers Needed:</label>
+                    {{ form.volunteers_needed }}
+                </div>
+                <div class="field">
+                    {{ form.funds_needed.errors }}
+                    <label for="{{ form.funds_needed.id_for_label }}">Funds Needed:</label>
+                    {{ form.funds_needed }}
+                </div>
+                <div class="field">
+                    {{ form.funds_available.errors }}
+                    <label for="{{ form.funds_available.id_for_label }}">Funds Available:</label>
+                    {{ form.funds_available }}
+                </div>
+                <button class="ui teal button" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

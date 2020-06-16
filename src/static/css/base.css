@@ -1,0 +1,30 @@
+body {
+    background-color: white;
+}
+
+.ui.menu .item img.logo {
+    margin-right: 1.5rem;
+}
+
+.main.container {
+    margin-top: 7rem;
+}
+
+.wireframe {
+    margin-top: 2em;
+}
+
+.ui.footer .segment {
+    margin: 5em 0em 0em;
+    padding: 5em 0em;
+}
+
+.orange-gradient {
+    background: #659999;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F4B732, #EF9F10) !important;  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #F4B732, #EF9F10) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.right.menu.icon-items > a.item:before {
+    background: white !important;
+}

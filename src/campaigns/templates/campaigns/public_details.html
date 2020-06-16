@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui positive message" id="results" style="display:none;">
+                    <i class="close icon"></i>
+                    <p id="success-msg"></p>
+                </div>
+                <h1 class="ui header">{{ campaign.title }}</h1>
+                <div class="extra">
+                    <div class="ui label">Creator: {{ campaign.initiator.user.username }}</div>
+                    <div class="ui label"><i class="globe icon"></i> Location</div>
+                    <div class="ui label"><i class="heart icon"></i> {{ campaign.cause.name }}</div>
+                    <div class="ui label"><i class="users icon"></i> {{ campaign.volunteers_needed }} Volunteers Needed</div>
+                </div>
+                <p class="mt-3">{{ campaign.description }}</p>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui fluid buttons">
+                    <button id="volunteer" class="ui button">Volunteer</button>
+                    <div class="or"></div>
+                    <button id="donate" class="ui orange-red button">Donate</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="eleven wide column">
+                <div id="posts">
+                    {% for post in campaign.get_conversations %}
+                        <div class="ui fluid card">
+                            <div class="content">
+                                <div class="header"><a href="#">{{ post.title }}</a></div>
+                                <div class="meta">{{ post.timelapse }}</div>
+                                <div class="description">
+                                    {{ post.content }}
+                                </div>
+                                
+                                <form id="comment-form" class="ui reply form mt-3" method="POST" action="#">
+                                    <div class="field">
+                                        <input type="text" id="c-content" name="c-content" required />
+                                    </div>
+                                    <button type="submit" class="ui green labeled submit icon button">
+                                        <i class="icon edit"></i> Add Reply
+                                    </button>
+                                </form>
+
+                                {% comment %} {% include 'comments/_comments.html' %} {% endcomment %}
+                            </div>
+                            <div class="extra content">
+                                <i class="check icon"></i>
+                                121 Votes
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="five wide column">
+                <div class="ui top demo attached segment">
+                    <div class="ui header">Volunteers</div>
+                </div>
+                <div class="ui attached segment scrollable">
+                    <div class="ui tiny images">
+                        {% for volunteer in volunteers %}
+                            <img src="{{ MEDIA_URL }}{{ volunteer.member.user.photo }}" class="ui image">
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="ui top demo attached segment mt-3">
+                    <div class="ui header">Public Events</div>
+                </div>
+                <div class="ui attached segment scrollable">
+                    <p>Events</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="v-modal" class="ui longer modal">
+    <div class="header">Volunteer</div>
+    <div class="scrolling content">
+        <form id="v-form" class="ui large container form" method="POST" action="{{ campaign.volunteer_url }}">
+            {% csrf_token %}
+            <div class="field">
+                <label for="reason">Reason:</label>
+                <textarea id="reason" name="reason"></textarea>
+            </div>
+            <div class="ui divider"></div>
+            <button class="ui orange-red button" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<div id="d-modal" class="ui longer modal">
+    <div class="header">Donate</div>
+    <div class="scrolling content">
+        <p>Very long content goes here</p>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+$(document).ready(function() {
+    $('.menu .item').tab();
+    //$('#example1').progress();
+    $('#example2').progress();
+
+    $("#volunteer").click(function() {
+        $('#v-modal').modal('show');
+    });
+
+    $("#donate").click(function() {
+        $('#d-modal').modal('show');
+    });
+
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
+    $('#v-form').on('submit', function(event){
+        event.preventDefault();
+
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            success: function(response) {
+                 console.log(response);
+                 if(response['success']) {
+                    $("#results").css("display", "block");
+                    $("#success-msg").html(response['message'])
+                    $(".ui.longer.modal").modal('hide');
+                 }
+                 if(response['error']) {
+                 } 
+            },
+            error: function (request, status, error) {
+                 console.log(request.responseText);
+            }
+        });
+    });
+
+    $("#comment-form").on("submit", function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            success: function(json) {
+                console.log(json);
+                $("#comment-form")[0].reset();
+
+                var comment = document.createElement("div");
+                var avatar = document.createElement("a");
+                var img = document.createElement("img");
+                var content = document.createElement("div");
+                var author = document.createElement("a");
+                var text = document.createElement("div");
+                var divider = document.createElement("div");
+                var metadata = document.createElement("div");
+                var created_at = document.createElement("span");
+                var commentForm = document.createElement("form");
+                var field = document.createElement("div");
+                var textarea = document.createElement("textarea");
+                var submitBtn = document.createElement("button");
+                var editIcon = document.createElement("i");
+                var csrfToken = document.createElement("input");
+                
+                $(comment).addClass("comment");
+                $(avatar).addClass("avatar");
+                $(content).addClass("content");
+                $(author).addClass("author");
+                $(metadata).addClass("metadata");
+                $(created_at).addClass("date");
+                $(text).addClass("text");
+                $(divider).addClass("ui divider");
+                $(commentForm).addClass("ui fluid reply form mt-3 reply-form");
+                $(field).addClass("field");
+                $(submitBtn).addClass("ui teal labeled submit icon button");
+                $(editIcon).addClass("icon edit");
+
+                $(commentForm).attr("id", json.slug);
+                $(commentForm).attr("method", "POST");
+                $(commentForm).attr("action", `/api/comments/${json.slug}/reply/`);
+                $(submitBtn).attr("type", "submit");
+                $(textarea).attr("name", "reply-content");
+                $(img).attr("src", json.author.user.photo);
+                //$(csrfToken).attr("type", "hidden").attr("name", "csrfmiddlewaretoken").attr("value", '{{ csrf_token }}')
+
+                var comment_content = $(content)
+                    .append($(author).html(json.author.user.username))
+                    .append($(metadata)
+                        .append($(created_at).html(`Created at: ${json.serialized_date}`)))
+                    .append($(text).html(`<p>${json.content}</p>`));
+
+                var comment_avatar = $(avatar)
+                    .append(img)
+
+                var comment_form = $(commentForm)
+                    //.append($(csrfToken))
+                    .append($(field).html(textarea))
+                    .append($(submitBtn).append($(editIcon)).append("Add Reply"));
+
+                var comment_view = $(comment)
+                    .append(divider)
+                    .append(comment_avatar)
+                    .append($(comment_content).append(comment_form));
+
+                $("#comments").prepend(comment_view);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    });
+
+    var rForms = document.querySelectorAll(".reply-form");
+
+    rForms.forEach(function(form) {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(form).serialize(),
+                type: $(form).attr('method'),
+                url: $(form).attr('action'),
+                success: function(json) {
+                    console.log(json);
+                    $(form)[0].reset();
+
+                    var comment = document.createElement("div");
+                    var avatar = document.createElement("a");
+                    var img = document.createElement("img");
+                    var content = document.createElement("div");
+                    var author = document.createElement("a");
+                    var text = document.createElement("div");
+                    var divider = document.createElement("div");
+                    var metadata = document.createElement("div");
+                    var created_at = document.createElement("span");
+                    
+                    // var actions = document.createElement()
+                    
+                    $(comment).addClass("comment");
+                    $(avatar).addClass("avatar");
+                    $(content).addClass("content");
+                    $(author).addClass("author");
+                    $(metadata).addClass("metadata");
+                    $(created_at).addClass("date");
+                    $(text).addClass("text");
+                    $(divider).addClass("ui divider");
+                    $(img).attr("src", json.author.user.photo)
+
+                    var comment_content = $(content)
+                        .append($(author).html(json.author.user.username))
+                        .append($(metadata)
+                            .append($(created_at).html(`Created at: ${json.serialized_date}`)))
+                        .append($(text).html(`<p>${json.content}</p>`));
+
+                    var comment_avatar = $(avatar)
+                        .append(img)
+
+                    var comment_view = $(comment)
+                        .append(divider)
+                        .append(comment_avatar)
+                        .append(comment_content);
+
+                    $(`#r_${form.id}`).prepend(comment_view);
+                },
+                error: function (request, status, error) {
+                    console.log(request.responseText);
+                }
+            });
+        })
+    });
+});
+</script>
+{% endblock javascript %}

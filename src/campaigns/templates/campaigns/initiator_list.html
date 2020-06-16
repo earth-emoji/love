@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui header">Campaigns</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="four wide column">
+                {% include 'partials/_sidenav.html' %}
+            </div>
+            <div class="twelve wide column">
+                <a class="fluid ui orange-red button rounded-0" href="{% url 'campaigns:create' %}">Create</a>
+                <table class="ui table rounded-0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Cause</th>
+                            <th>Volunteers Needed</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for campaign in campaigns %}
+                            <tr>
+                                <td>{{ campaign.title }}</td>
+                                <td>{{ campaign.cause.name }}</td>
+                                <td>{{ campaign.volunteers_needed}}</td>
+                                <td><a class="or-link" href="{% url 'campaigns:idetails' campaign.slug %}">View</a> | <a class="or-link" href="{% url 'campaigns:edit' campaign.slug %}">Edit</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

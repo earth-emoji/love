@@ -1,0 +1,211 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui header">Posts</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="sixteen wide column">
+                <button
+                    type="button"
+                    id="new-post"
+                    class="ui teal button fluid"
+                >
+                    New Post
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="sixteen wide column">
+                <div id="posts">
+                    {% for post in posts %}
+                        <div class="ui fluid card">
+                            <div class="content">
+                                <div class="header"><a href="{{ post.get_campaign_post_details_url }}" >{{ post.title }}</a></div>
+                                <div class="meta">{{ post.timelapse }}</div>
+                                <div class="description">
+                                    {{ post.content }}
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <i class="check icon"></i>
+                                121 Votes
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'campaigns/_post_modal.html' %} 
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        $("#new-post").on("click", function (e) {
+            e.preventDefault();
+            $(".longer.modal").modal("show");
+        });
+
+        $("#post-form").on("submit", function(e) {
+            e.preventDefault();
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function(json) {
+                    console.log(json);
+                    $("#post-form")[0].reset();
+                    $(".ui.longer.modal").modal('hide');
+
+                    var card = document.createElement("div");
+                    var content = document.createElement("div");
+                    var header = document.createElement("div");
+                    var meta = document.createElement("div");
+                    var desc = document.createElement("div");
+                    var divider = document.createElement("div");
+                    var extra_content = document.createElement("div");
+                    
+                    $(card).addClass("ui fluid card");
+                    $(content).addClass("content");
+                    $(header).addClass("header");
+                    $(meta).addClass("meta");
+                    $(desc).addClass("description");
+                    $(extra_content).addClass("extra content");
+
+                    var post_content = $(content)
+                                    .append($(header).html(json.title))
+                                    .append($(meta).html("Now"))
+                                    .append($(desc).html(json.content))
+
+                    var post = $(card).html(post_content).append($(extra_content).html("<i class='check icon'></i> 121 Votes"));
+
+                    $("#posts").prepend(post);
+                },
+                error: function (request, status, error) {
+                    console.log(request.responseText);
+                }
+            });
+            
+        });
+
+        $("#comment-form").on("submit", function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function(json) {
+                    console.log(json);
+                    $("#comment-form")[0].reset();
+
+                    var comment = document.createElement("div");
+                    var avatar = document.createElement("a");
+                    var img = document.createElement("img");
+                    var content = document.createElement("div");
+                    var author = document.createElement("a");
+                    var text = document.createElement("div");
+                    var divider = document.createElement("div");
+                    var metadata = document.createElement("div");
+                    var created_at = document.createElement("span");
+                    // var actions = document.createElement()
+                    
+                    $(comment).addClass("comment");
+                    $(avatar).addClass("avatar");
+                    $(content).addClass("content");
+                    $(author).addClass("author");
+                    $(metadata).addClass("metadata");
+                    $(created_at).addClass("date");
+                    $(text).addClass("text");
+                    $(divider).addClass("ui divider");
+                    $(img).attr("src", json.author.user.photo)
+
+                    var comment_content = $(content)
+                        .append($(author).html(json.author.user.username))
+                        .append($(metadata)
+                            .append($(created_at).html(`Created at: ${json.serialized_date}`)))
+                        .append($(text).html(`<p>${json.content}</p>`));
+
+                    var comment_avatar = $(avatar)
+                        .append(img)
+
+                    var comment_view = $(comment)
+                        .append(divider)
+                        .append(comment_avatar)
+                        .append(comment_content);
+
+                    $("#comments").prepend(comment_view);
+                },
+                error: function (request, status, error) {
+                    console.log(request.responseText);
+                }
+            });
+        });
+
+        var rForms = document.querySelectorAll(".reply-form");
+
+        rForms.forEach(function(form) {
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    data: $(form).serialize(),
+                    type: $(form).attr('method'),
+                    url: $(form).attr('action'),
+                    success: function(json) {
+                        console.log(json);
+                        $(form)[0].reset();
+    
+                        var comment = document.createElement("div");
+                        var avatar = document.createElement("a");
+                        var img = document.createElement("img");
+                        var content = document.createElement("div");
+                        var author = document.createElement("a");
+                        var text = document.createElement("div");
+                        var divider = document.createElement("div");
+                        var metadata = document.createElement("div");
+                        var created_at = document.createElement("span");
+                        // var actions = document.createElement()
+                        
+                        $(comment).addClass("comment");
+                        $(avatar).addClass("avatar");
+                        $(content).addClass("content");
+                        $(author).addClass("author");
+                        $(metadata).addClass("metadata");
+                        $(created_at).addClass("date");
+                        $(text).addClass("text");
+                        $(divider).addClass("ui divider");
+                        $(img).attr("src", json.author.user.photo)
+    
+                        var comment_content = $(content)
+                            .append($(author).html(json.author.user.username))
+                            .append($(metadata)
+                                .append($(created_at).html(`Created at: ${json.serialized_date}`)))
+                            .append($(text).html(`<p>${json.content}</p>`));
+    
+                        var comment_avatar = $(avatar)
+                            .append(img)
+    
+                        var comment_view = $(comment)
+                            .append(divider)
+                            .append(comment_avatar)
+                            .append(comment_content);
+    
+                        $(`#r_${form.id}`).prepend(comment_view);
+                    },
+                    error: function (request, status, error) {
+                        console.log(request.responseText);
+                    }
+                });
+            })
+        });
+    });
+</script>
+{% endblock javascript %}

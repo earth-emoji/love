@@ -1,0 +1,36 @@
+{% load static %}
+
+<div class="ui fixed menu" style="border-bottom: 3px solid #ff3500;">
+    <div class="ui container">
+        <a class="header item" href="#">
+            <img class="logo" src="{% static 'images/logo.png' %}" />
+             Highr Love
+        </a>
+        <a class="item" href="{% url 'home' %}">Home</a>
+        {% if request.user.is_authenticated %}
+            <a class="item" href="{% url 'campaigns:list' %}">Campaigns</a>
+            <a class="item" href="{% url 'discussions:list' %}">Discussions</a>
+            <a class="item" href="{% url 'events:public-events' %}">Events</a>
+            <div class="ui simple dropdown item">
+                {{ request.user.name }} <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="#">My Campaigns</a>
+                    <a class="item" href="#">Volunteer Work</a>
+                    <a class="item" href="#">Donations</a>
+                    <div class="divider"></div>
+                    <div class="header">Account Items</div>
+                    <a class="item" href="#">Setting</a>
+                    <a class="item" href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+            <div class="right menu icon-items">
+                <a class="item" style="background-color: white;" href="#"><i class="bell icon"></i></a>
+                <a class="item" href="#"><i class="users icon"></i></a>
+                <a class="item" href="#"><i class="comments icon"></i></a>
+            </div>
+        {% else %}
+            <a class="item" href="{% url 'login' %}">Login</a>
+            <a class="item" href="{% url 'user_signup' %}">Signup</a>
+        {% endif %}
+    </div>
+</div>
