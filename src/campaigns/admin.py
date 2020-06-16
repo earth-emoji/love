@@ -5,7 +5,7 @@ from campaigns.models import Campaign, Cause, Volunteer
 
 @admin.register(Cause)
 class CauseAdmin(admin.ModelAdmin):
-    ordering = ['-name']
+    ordering = ['name']
 
 admin.site.register(Campaign)
 admin.site.register(Volunteer)
