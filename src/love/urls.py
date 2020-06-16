@@ -24,10 +24,11 @@ urlpatterns = [
     path('', include('error_pages.urls')),
     path('', include('accounts.urls')),
     path('', include('campaigns.urls')),
-    path('', include('posts.urls')),
     path('', include('events.urls')),
     path('', include('discussions.urls')),
     path('', include('notifi.urls')),
+    path('', include('catalog.urls')),
+    path('', include('shop.urls')),
     path('summernote/', include('django_summernote.urls')),
 ]
 if settings.DEBUG:

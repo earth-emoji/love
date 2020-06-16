@@ -4,11 +4,11 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 
 from accounts.models import Member
-from classifications.models import Cause
+from campaigns.models import Cause
 
 class Campaign(models.Model):
-    slug = models.SlugField(max_length=80, unique=True, blank=True)
-    title = models.CharField(max_length=50, blank=True)
+    slug = models.SlugField(max_length=128, unique=True, blank=True)
+    title = models.CharField(max_length=100, blank=True)
     description = models.TextField(null=True, blank=True)
     funds_needed = models.DecimalField(max_digits=11, decimal_places=2, null=True, blank=True)
     funds_raised = models.DecimalField(max_digits=11, decimal_places=2, null=True, blank=True)
@@ -25,16 +25,11 @@ class Campaign(models.Model):
     def volunteer_url(self):
         return "/campaigns/%s/volunteer/" % (self.slug)
 
-    @property
-    def new_post_url(self):
-        return f"/api/posts/campaign/{self.slug}/"
-
     def get_absolute_url(self):
         return reverse("campaigns:details", kwargs={"slug": self.slug})
-    
 
-    def get_posts(self):
-        return self.posts.filter(campaign=self).order_by('-created_at')
+    def get_conversations(self):
+        return self.topic.conversations.all()
 
     def __str__(self):
         return self.title

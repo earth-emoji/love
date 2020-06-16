@@ -4,23 +4,22 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 
 from accounts.models import Member
-from campaigns.models import Campaign
 from discussions.models import Topic
 
 class Conversation(models.Model):
-    slug = models.SlugField(max_length=80, unique=True, blank=True)
-    title = models.CharField(max_length=50, blank=True)
+    slug = models.SlugField(max_length=180, unique=True, blank=True)
+    title = models.CharField(max_length=150, blank=True)
     content = models.TextField(blank=True)
     is_private = models.BooleanField(default=False, blank=True)
     allowed_members = models.ManyToManyField(Member, related_name='private_conversations', blank=True)
     blacklist = models.ManyToManyField(Member, related_name='blacklisted_conversations', blank=True)
     author = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='conversations', blank=True)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='conversations', blank=True)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='conversations', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.author.user.email
+        return self.title
 
     def save(self, *args, **kwargs):
         today = datetime.today()

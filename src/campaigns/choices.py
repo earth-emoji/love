@@ -4,3 +4,9 @@ REQUEST_STATUS_CHOICES = (
     ('Rejected', 'Rejected'),
     ('Blocked', 'Blocked'),
 )
+
+CAUSE_CATEGORY_CHOICES = (
+    ('Animals', 'Animals'),
+    ('Environment', 'Environment'),
+    ('Humans', 'Humans'),
+)

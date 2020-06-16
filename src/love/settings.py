@@ -43,17 +43,15 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'accounts',
-    'classifications',
     'campaigns',
     'discussions',
     'pages',
     'error_pages',
     'photos',
     'notifi',
-    'posts',
     'events',
     'catalog',
-    'shopping_cart',
+    'shop',
     'django_summernote',
 ]
 

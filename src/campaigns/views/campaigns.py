@@ -6,7 +6,7 @@ from users.decorators import members_required
 
 from campaigns.forms import CampaignForm
 from campaigns.models import Campaign, Volunteer
-from posts.models import Post, Comment
+from discussions.models import Discussion, Topic, Conversation
 from events.models import Event
 
 @login_required
@@ -31,7 +31,8 @@ def campaign_create(request):
         obj = form.save(commit=False)
         obj.initiator = request.user.member
         obj.save()
-        Post.objects.create(title=obj.title, content=form.cleaned_data['opener'], campaign=obj, author=obj.initiator, is_published=True)
+        topic = Topic.objects.create(campaign=obj, name=f"{obj.title} Topic", description=f"{obj.title} Conversations")
+        Conversation.objects.create(title=f"Welcome to the {obj.title} campaign", content=form.cleaned_data['opener'], topic=topic, author=obj.initiator)
         return redirect('campaigns:idetails', obj.slug)
     context["form"] = form
     return render(request, template_name, context)
@@ -132,25 +133,3 @@ def campaign_delete(request, slug):
     context["campaign"] = campaign
 
     return render(request, template_name, context)
-
-@login_required
-@members_required
-def campaign_posts(request, slug):
-    template_name = 'campaigns/posts.html'
-    context = {}
-
-    if slug is None or slug == "":
-        return redirect('not-found')
-
-    campaign = Campaign.objects.get(slug=slug)
-
-    if campaign is None:
-        return redirect('not-found')
-
-    posts = Post.objects.filter(campaign=campaign).order_by('-created_at')
-    
-    context["campaign"] = campaign
-    context["posts"] = posts
-    return render(request, template_name, context)
-
-

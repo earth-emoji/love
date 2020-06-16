@@ -3,8 +3,8 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 
 class Discussion(models.Model):
-    slug = models.SlugField(max_length=80, unique=True, blank=True)
-    name = models.CharField(max_length=60, unique=True, blank=True)
+    slug = models.SlugField(max_length=128, unique=True, blank=True)
+    name = models.CharField(max_length=100, unique=True, blank=True)
     description = models.TextField(blank=True)
 
     def __str__(self):

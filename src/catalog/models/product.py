@@ -13,7 +13,6 @@ from catalog.models import Category
 class ProductAttribute(models.Model):
     slug = models.SlugField(max_length=80, unique=True, blank=True)
     name = models.CharField(max_length=255)
-    is_aux = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'product attribute'

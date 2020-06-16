@@ -2,9 +2,6 @@
   <a class="{% if request.resolver_match.url_name == 'idetails' %}active or-text{% endif %} item">
     {{ campaign.title }}
   </a>
-  <a href="{% url 'campaigns:posts' campaign.slug %}" class="{% if request.resolver_match.url_name == 'posts' %}active or-text{% endif %} item">
-    Posts
-  </a>
   <a class="item">
     Donations
   </a>

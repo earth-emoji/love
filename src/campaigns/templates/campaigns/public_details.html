@@ -35,16 +35,16 @@
         <div class="row">
             <div class="eleven wide column">
                 <div id="posts">
-                    {% for post in campaign.get_posts %}
+                    {% for post in campaign.get_conversations %}
                         <div class="ui fluid card">
                             <div class="content">
-                                <div class="header"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></div>
+                                <div class="header"><a href="#">{{ post.title }}</a></div>
                                 <div class="meta">{{ post.timelapse }}</div>
                                 <div class="description">
                                     {{ post.content }}
                                 </div>
                                 
-                                <form id="comment-form" class="ui reply form mt-3" method="POST" action="{{ post.post_comment_url }}">
+                                <form id="comment-form" class="ui reply form mt-3" method="POST" action="#">
                                     <div class="field">
                                         <input type="text" id="c-content" name="c-content" required />
                                     </div>
@@ -53,7 +53,7 @@
                                     </button>
                                 </form>
 
-                                {% include 'comments/_comments.html' %}
+                                {% comment %} {% include 'comments/_comments.html' %} {% endcomment %}
                             </div>
                             <div class="extra content">
                                 <i class="check icon"></i>

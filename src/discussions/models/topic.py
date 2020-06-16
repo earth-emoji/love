@@ -4,15 +4,15 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 
 from accounts.models import Member
-from classifications.models import Tag
+from campaigns.models import Campaign
 from discussions.models import Discussion
 
 class Topic(models.Model):
-    slug = models.SlugField(max_length=80, unique=True, blank=True)
-    name = models.CharField(max_length=60, blank=True)
+    slug = models.SlugField(max_length=128, unique=True, blank=True)
+    name = models.CharField(max_length=100, unique=True, blank=True)
     description = models.TextField(blank=True)
-    tags = models.ManyToManyField(Tag, related_name='topics', blank=True)
-    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, related_name='topics', blank=True)
+    campaign = models.OneToOneField(Campaign, on_delete=models.CASCADE, null=True, blank=True)
+    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, related_name='topics', null=True, blank=True)
 
     def __str__(self):
         return self.name

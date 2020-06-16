@@ -1,8 +1,7 @@
 from django import forms
 
-from campaigns.models import Campaign
-from classifications.fields import GroupedModelChoiceField
-from classifications.models import Cause
+from campaigns.models import Campaign, Cause
+from utils.fields import GroupedModelChoiceField
 
 class CampaignForm(forms.ModelForm):
     title = forms.CharField(max_length=128, min_length=2, strip=True, widget=forms.TextInput(
@@ -17,7 +16,7 @@ class CampaignForm(forms.ModelForm):
         attrs={'class': ''}))
     cause = GroupedModelChoiceField(
         queryset=Cause.objects.all(),
-        choices_groupby='classification'
+        choices_groupby='category'
     )
     volunteers_needed = forms.IntegerField(max_value=100, widget=forms.NumberInput(attrs={'class': ''}))
 
