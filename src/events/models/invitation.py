@@ -15,6 +15,9 @@ class Invitation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.attendee.get_name} has been invited to {self.event.name}"
+
     class Meta:
         verbose_name = 'invitation'
         verbose_name_plural = 'invitations'

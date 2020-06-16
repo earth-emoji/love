@@ -25,6 +25,9 @@ class Reply(models.Model):
         """Return replies of a comment."""
         return Reply.objects.filter(parent=self).order_by('-created_at')
 
+    def __str__(self):
+        return f"{self.author.get_name} replies to {self.conversation.title}"
+
     class Meta:
         verbose_name = 'reply'
         verbose_name_plural = 'replies'
