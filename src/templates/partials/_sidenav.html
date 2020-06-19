@@ -5,10 +5,13 @@
   <a href="{% url 'members:ilist' %}" class="item {% if request.resolver_match.url_name == 'ilist' %}active or-text{% endif %}">
     Campaigns
   </a>
+  <a class="item">
+    Volunteer Work
+  </a>
   <a href="{% url 'events:user-events' %}" class="item">
     Events
   </a>
-  <a class="item">
+  <a href="{% url 'contacts:contact-list' %}" class="item">
     Contacts
   </a>
   <a class="item">

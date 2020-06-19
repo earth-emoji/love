@@ -24,7 +24,7 @@ class ProductAttribute(models.Model):
     def save(self, *args, **kwargs):
         today = datetime.today()
         title_slugified = slugify(self.name)
-        self.slug = f'{today:%Y%m%d%M%S}-{title_slugified}'
+        self.slug = f'{today:%Y%m%d%M%S%f}-{title_slugified}'
         super().save(*args, **kwargs)
 
 class PredefineAttributeValue(models.Model):
@@ -42,7 +42,7 @@ class PredefineAttributeValue(models.Model):
     def save(self, *args, **kwargs):
         today = datetime.today()
         title_slugified = slugify(self.name)
-        self.slug = f'{today:%Y%m%d%M%S}-{title_slugified}'
+        self.slug = f'{today:%Y%m%d%M%S%f}-{title_slugified}'
         super().save(*args, **kwargs)
 
 class Product(models.Model):
@@ -119,7 +119,7 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         today = datetime.today()
         title_slugified = slugify(self.name)
-        self.slug = f'{today:%Y%m%d%M%S}-{title_slugified}'
+        self.slug = f'{today:%Y%m%d%M%S%f}-{title_slugified}'
         super().save(*args, **kwargs)
 
 class ProductBundle(models.Model):
@@ -165,5 +165,5 @@ class ProductBundle(models.Model):
     def save(self, *args, **kwargs):
         today = datetime.today()
         title_slugified = slugify(self.name)
-        self.slug = f'{today:%Y%m%d%M%S}-{title_slugified}'
+        self.slug = f'{today:%Y%m%d%M%S%f}-{title_slugified}'
         super().save(*args, **kwargs)

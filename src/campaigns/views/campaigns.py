@@ -51,7 +51,7 @@ def campaign_details(request, slug):
     if campaign is None:
         return redirect('not-found')
 
-    volunteers = Volunteer.objects.filter(campaign=campaign, status="Accept")
+    volunteers = Volunteer.objects.filter(campaign=campaign, status="Accepted")
     
     context["campaign"] = campaign
     context["volunteers"] = volunteers
@@ -75,10 +75,13 @@ def initiator_campaign_details(request, slug):
     if not (campaign.initiator == request.user.member):
         return redirect('forbidden')
 
-    volunteers = Volunteer.objects.filter(campaign=campaign, status="Pending")[:5]
-    
+    volunteer_requests = Volunteer.objects.filter(campaign=campaign, status="Pending")[:5]
+
+    volunteers = Volunteer.objects.filter(campaign=campaign, status="Accepted")
+
     context["campaign"] = campaign
     context["volunteers"] = volunteers
+    context["volunteer_requests"] = volunteer_requests
 
     return render(request, template_name, context)
 

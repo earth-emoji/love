@@ -39,7 +39,7 @@ class Event(models.Model):
     def save(self, *args, **kwargs):
         today = datetime.today()
         title_slugified = slugify(self.name)
-        self.slug = f'{today:%Y%m%d%M%S}-{title_slugified}'
+        self.slug = f'{today:%Y%m%d%M%S%f}-{title_slugified}'
         super().save(*args, **kwargs)
 
     class Meta:

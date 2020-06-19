@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui dividing header">Contacts</h1>
+                
+                <div>
+                {% for contact in contacts %}
+                    {{ contact.member }}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

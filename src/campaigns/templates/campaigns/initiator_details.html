@@ -116,15 +116,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% for volunteer in volunteers %}
-                            <tr id="tr_{{ volunteer.slug }}">
-                                <td>{{ volunteer.member.get_name }}</td>
-                                <td><button type="button" id="{{ volunteer.member.slug }}" class="v-view ui button">View</button></td>
+                        {% for vr in volunteer_requests %}
+                            <tr id="tr_{{ vr.slug }}">
+                                <td>{{ vr.member.get_name }}</td>
+                                <td><button type="button" id="{{ vr.member.slug }}" class="v-view ui button">View</button></td>
                                 <td>
-                                    <form id="{{ volunteer.slug }}" class="v-form ui form mt-2" method="POST" action="{{ volunteer.response_url }}">
+                                    <form id="{{ vr.slug }}" class="v-form ui form mt-2" method="POST" action="{{ vr.response_url }}">
                                         <div class="fields">
                                             <div class="sixteen wide field pt-1">
-                                                <select name="status" id="sel_{{volunteer.slug}}">
+                                                <select name="status" id="sel_{{vr.slug}}">
                                                     <option selected="true" disabled="disabled">Response</option>
                                                     <option value="Accept">Accept</option>
                                                     <option value="Reject">Deny</option>
@@ -134,7 +134,7 @@
                                     </form>
                                 </td>
                             </tr>
-                            {% include 'volunteers/_volunteer_modal.html' with member=volunteer.member %}
+                            {% include 'volunteers/_volunteer_modal.html' with member=vr.member %}
                         {% endfor %}
                     </tbody>
                     </table>
@@ -144,7 +144,11 @@
                     <div class="ui header">Volunteers</div>
                 </div>
                 <div class="ui attached segment scrollable">
-                    <p>Volunteers</p>
+                    <div class="ui tiny images">
+                        {% for volunteer in volunteers %}
+                            <img src="{{ volunteer.member.get_avatar }}" class="ui image">
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

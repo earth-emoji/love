@@ -71,7 +71,7 @@
                 <div class="ui attached segment scrollable">
                     <div class="ui tiny images">
                         {% for volunteer in volunteers %}
-                            <img src="{{ MEDIA_URL }}{{ volunteer.member.user.photo }}" class="ui image">
+                            <img src="{{ volunteer.member.get_avatar }}" class="ui image">
                         {% endfor %}
                     </div>
                 </div>

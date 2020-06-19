@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'events',
     'catalog',
     'shop',
+    'contacts',
     'django_summernote',
 ]
 

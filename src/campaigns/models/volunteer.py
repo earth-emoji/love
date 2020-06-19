@@ -18,7 +18,7 @@ class Volunteer(models.Model):
         return "/volunteers/%s/response/" % (self.slug)
 
     def __str__(self):
-        return f"{self.member.get_name} for {self.campaign.title}"
+        return f"{self.member.get_name} for {self.campaign.title} ({self.status})"
 
     class Meta:
         verbose_name = 'volunteer'

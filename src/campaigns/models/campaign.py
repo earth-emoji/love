@@ -31,13 +31,16 @@ class Campaign(models.Model):
     def get_conversations(self):
         return self.topic.conversations.all()
 
+    def get_volunteers(self):
+        return self.volunteers.filter(status="Accepted")
+
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
         today = datetime.today()
         title_slugified = slugify(self.title)
-        self.slug = f'{today:%Y%m%d%M%S}-{title_slugified}'
+        self.slug = f'{today:%Y%m%d%M%S%f}-{title_slugified}'
         super().save(*args, **kwargs)
 
     class Meta:
