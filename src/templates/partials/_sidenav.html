@@ -11,10 +11,10 @@
   <a href="{% url 'events:user-events' %}" class="item">
     Events
   </a>
-  <a href="{% url 'contacts:contact-list' %}" class="item">
+  <a href="#" class="item">
     Contacts
   </a>
-  <a class="item">
+  <a href="{% url 'messaging:user-channels' request.user.username %}" class="item">
     Messages
   </a>
   <div class="item">

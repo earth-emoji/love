@@ -31,6 +31,7 @@ class User(AbstractUser):
     sex = models.CharField(
         max_length=6, choices=SEX_CHOICES, null=True, blank=True)
     is_member = models.BooleanField(default=False, blank=True)
+    # contacts = models.ManyToManyField('self', related_name='contacts', symmetrical=False)
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['name', 'email']

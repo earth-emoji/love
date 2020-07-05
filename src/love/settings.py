@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'events',
     'catalog',
     'shop',
-    'contacts',
+    'direct_messages',
     'django_summernote',
 ]
 
@@ -205,3 +205,5 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+MESSAGES_TO_LOAD = 15

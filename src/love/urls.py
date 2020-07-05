@@ -29,7 +29,7 @@ urlpatterns = [
     path('', include('notifi.urls')),
     path('', include('catalog.urls')),
     path('', include('shop.urls')),
-    path('', include('contacts.urls')),
+    path('', include('direct_messages.urls')),
     path('summernote/', include('django_summernote.urls')),
 ]
 if settings.DEBUG:

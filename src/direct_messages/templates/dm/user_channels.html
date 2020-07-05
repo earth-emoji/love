@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui header">Channels</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="four wide column">
+                {% include 'partials/_sidenav.html' %}
+            </div>
+            <div class="twelve wide column">
+                <a class="fluid ui orange-red button rounded-0" href="#">Create</a>
+                <table class="ui table rounded-0">
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th>Users</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for uc in channels %}
+                            <tr>
+                                <td>{{ uc.channel }}</td>
+                                <td>
+                                    {% for cu in uc.channel.channeluser_set.all %}
+                                        {{ cu.user.username }}, &nbsp;
+                                    {% endfor %}
+                                </td>
+                                <td><a class="or-link" href="{% url 'messaging:channel-details' uc.channel.id %}">Message</a> | <a class="or-link" href="#">Edit</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
