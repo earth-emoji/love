@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui padded grid">
+        <div class="row">
+            <div class="sixteen wide column">
+                <h1 class="ui dividing header">{{ event.name }}</h1>
+                <div class="extra">
+                    <div class="ui label"><i class="user icon"></i> {{event.creator.get_name}}</div>
+                    <div class="ui label"><i class="globe icon"></i> {{event.location}}</div>
+                </div>
+                <div class="meta my-3">
+                    <span class="cinema" style="display: block; padding-bottom: 0.05rem">
+                        <span>Start: {{event.formatted_start_time}}</span> &middot; 
+                        <span class="floated right">Finish: {{event.formatted_end_time}}</span>
+                    </span>
+                </div>
+                <div class="description">
+                    <p>{{event.details}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="sixteen wide column">
+                <h2 class="ui dividing header">Who's Attending?</h2>
+                {% for person in event.attendees.all %}
+                    <img class="ui middle aligned tiny image" src="{{ person.get_avatar }}">
+                    <span>{{ person.get_name }}</span>
+                    <div class="ui divider"></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

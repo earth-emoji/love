@@ -20,7 +20,7 @@
                                 <img src="/images/wireframe/image.png">
                             </div>-->
                             <div class="content">
-                                <a class="header">{{event.name}}</a>
+                                <a href="{% url 'events:public-details' event.slug %}" class="header or-link">{{event.name}}</a>
                                 <div class="meta">
                                     <span class="cinema" style="display: block; padding-bottom: 0.05rem">
                                         <span>Start: {{event.formatted_start_time}}</span> &middot; 

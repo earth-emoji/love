@@ -6,6 +6,7 @@ from rest_framework.generics import ListAPIView
 
 from accounts.models import Member
 from campaigns.models import Campaign
+from direct_messages.models import Channel
 from users.decorators import members_required
 
 from events.forms import EventForm
@@ -37,6 +38,8 @@ def create_events(request):
             # c.end_time = datetime.strptime(form.cleaned_data['end_time'])
             c.creator = request.user.member
             c.save()
+            channel = Channel.objects.create(name="{c.name} Channel", event=c)
+            channel.users.add(c.creator.user)
             return redirect('events:user-events')
     else:
         form = EventForm()
@@ -100,6 +103,43 @@ def attend_event(request):
     if request.method == "POST" and request.is_ajax():
         event = Event.objects.get(slug=request.POST['slug'])
         event.attendees.add(request.user.member)
-        data = {'success':True, 'message': "You have been added to the event."}
+        event.channel.users.add(request.user)
+        data = {'success':True, 'message': f"You have been added to the event."}
         return JsonResponse(data, status=200)
     return HttpResponse("")
+
+@login_required
+@members_required
+def creator_details(request, slug):
+    template_name = "events/cdetails.html"
+    context = {}
+    if slug is None or slug == "":
+        return redirect('not-found')
+
+    event = Event.objects.get(slug=slug)
+
+    if event is None:
+        return redirect('not-found')
+
+    if not request.user.member.pk == event.creator.pk:
+        return redirect('forbidden')
+
+    context["event"] = event
+
+    return render(request, template_name, context)
+
+@login_required
+@members_required
+def public_details(request, slug):
+    template_name = "events/pdetails.html"
+    context = {}
+    if slug is None or slug == "":
+        return redirect('not-found')
+
+    event = Event.objects.get(slug=slug)
+
+    if event is None:
+        return redirect('not-found')
+
+    context["event"] = event
+    return render(request, template_name, context)

@@ -8,6 +8,7 @@ from campaigns.forms import CampaignForm
 from campaigns.models import Campaign, Volunteer
 from discussions.models import Discussion, Topic, Conversation
 from events.models import Event
+from direct_messages.models import Channel
 
 @login_required
 @members_required
@@ -33,6 +34,8 @@ def campaign_create(request):
         obj.save()
         topic = Topic.objects.create(campaign=obj, name=f"{obj.title} Topic", description=f"{obj.title} Conversations")
         Conversation.objects.create(title=f"Welcome to the {obj.title} campaign", content=form.cleaned_data['opener'], topic=topic, author=obj.initiator)
+        channel = Channel.objects.create(name="{obj.title} Channel", campaign=obj)
+        channel.users.add(obj.initiator.user)
         return redirect('campaigns:idetails', obj.slug)
     context["form"] = form
     return render(request, template_name, context)

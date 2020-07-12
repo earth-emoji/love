@@ -39,7 +39,7 @@
    
 </style>
 
-Channel - {{ object.id }}
+Channel - {{ object.name }}
 
 
 <h1>Channel Messages</h1>
@@ -131,6 +131,11 @@ Channel - {{ object.id }}
     var msgInput = $("#msg");
     var messages = $('#message-container');
 
+    function scrollBottom (el){
+        el.scrollTop = el.scrollHeight;
+    }
+    scrollBottom(document.getElementById("message-container"));
+
     socket.onopen = function(e) {
         console.log("open", e);
 
@@ -152,7 +157,8 @@ Channel - {{ object.id }}
         // receive data from the server
         var json = JSON.parse(e.data);
 
-        messages.append(`<div class='my-3 w-35 px-1 rounded mr-0 bg-primary text-white'><b>${json.username}</b><p>${json.message}</p></div>`);
+        messages.append(`<div class='my-3 w-35 px-1 rounded ${json.cls}'><b>${json.username}</b><p>${json.message}</p></div>`);
+        scrollBottom(document.getElementById("message-container"));
     }
 
     socket.onclose = function(e) {

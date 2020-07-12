@@ -75,7 +75,8 @@ function putTableData(result) {
                 "<td>" + b.location + "</td>" +
                 "<td>" + b.visibility + "</td>" +
                 "<td>" + formatServerDateTime(b.start_time)+ "</td>" +
-                "<td>" + formatServerDateTime(b.end_time)+ "</td></tr>"
+                "<td>" + formatServerDateTime(b.end_time)+ "</td>"+
+                `<td><a href="/events/${b.slug}/details/" class="or-link">View</a></td></tr>`;
             $("#listing").append(row);
         });
     }

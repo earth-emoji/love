@@ -4,6 +4,9 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Count
 
+from campaigns.models import Campaign
+from events.models import Event
+
 User = settings.AUTH_USER_MODEL
 
 # Create your models here.
@@ -99,6 +102,8 @@ class Channel(BaseModel): # models.model
     # slug -> Lookup slug 
     # title -> Channel name/title
     name = models.CharField(max_length=255)
+    campaign = models.OneToOneField(Campaign, on_delete=models.CASCADE, null=True, blank=True)
+    event = models.OneToOneField(Event, on_delete=models.CASCADE, null=True, blank=True)
 
     objects = ChannelManager()
 

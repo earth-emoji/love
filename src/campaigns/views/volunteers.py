@@ -19,16 +19,17 @@ def volunteer_response(request, slug):
     if request.method == 'POST':
         status = request.POST['status']
 
-        if status == "Accept":
+        if status == "Accepted":
             volunteer.status = status
             volunteer.save()
             campaign = volunteer.campaign
             campaign.volunteers_needed = campaign.volunteers_needed - 1
+            campaign.channel.users.add(volunteer.member.user)
             campaign.save()
 
             data = {'success':True, 'message': f"{volunteer.member.user.name} has been added to {volunteer.campaign.title}"}
             return JsonResponse(data)
-        elif status == "Reject":
+        elif status == "Rejected":
             volunteer.delete()
             
             data = {'success':True, 'message': "Request has been removed"}

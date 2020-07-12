@@ -45,9 +45,16 @@ class MessageConsumer(AsyncConsumer):
                 user = self.scope['user']
 
                 if user.is_authenticated:
+                    # add a class that will separate chat colors
+                    if not user:
+                        cls = "bg-secondary ml-0"
+                    else:
+                        cls = "mr-0 bg-primary text-white"
+
                     json_response = {
                         'message': msg,
-                        'username': user.username
+                        'username': user.username,
+                        'cls': cls
                     }
 
                     # save to database
