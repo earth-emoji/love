@@ -1,6 +1,6 @@
 from django.db import models
 
-class Agenda(models.Model):
+class Schedule(models.Model):
     pass
     # presenter
     # start datetime
