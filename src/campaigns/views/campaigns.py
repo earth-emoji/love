@@ -6,8 +6,7 @@ from users.decorators import members_required
 
 from campaigns.forms import CampaignForm
 from campaigns.models import Campaign, Volunteer
-from discussions.models import Discussion, Topic, Conversation
-from events.models import Event
+from discussions.models import Topic, Conversation
 from direct_messages.models import Channel
 
 @login_required
@@ -55,10 +54,10 @@ def campaign_details(request, slug):
         return redirect('not-found')
 
     volunteers = Volunteer.objects.filter(campaign=campaign, status="Accepted")
-    
+
     context["campaign"] = campaign
     context["volunteers"] = volunteers
-    
+
     return render(request, template_name, context)
 
 @login_required

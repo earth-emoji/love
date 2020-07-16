@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+from campaigns.models import Campaign
+from users.decorators import members_required
+
+

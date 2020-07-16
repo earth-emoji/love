@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'events',
     'catalog',
     'shop',
+    'fundraising',
     'direct_messages',
     'django_summernote',
 ]
