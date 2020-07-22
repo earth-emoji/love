@@ -7,3 +7,4 @@ class Schedule(models.Model):
     # end datetime
     # session
     # objective
+    # event

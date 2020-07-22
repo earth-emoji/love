@@ -40,7 +40,7 @@
             <div class="nine wide column">
                 <button id="post-form" type="button" class="ui fluid orange-red button rounded-0 mb-3">Post</button>
                 <div id="posts">
-                    {% for post in campaign.get_conversations %}
+                    {% for post in campaign.get_posts %}
                         <div class="ui fluid card rounded-0">
                             <div class="content">
                                 <div class="header"><a href="#">{{ post.title }}</a></div>

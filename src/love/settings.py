@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'users',
     'accounts',
     'campaigns',
-    'discussions',
     'pages',
     'error_pages',
     'photos',

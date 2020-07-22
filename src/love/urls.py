@@ -25,7 +25,6 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('', include('campaigns.urls')),
     path('', include('events.urls')),
-    path('', include('discussions.urls')),
     path('', include('notifi.urls')),
     path('', include('catalog.urls')),
     path('', include('shop.urls')),

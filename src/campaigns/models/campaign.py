@@ -28,8 +28,8 @@ class Campaign(models.Model):
     def get_absolute_url(self):
         return reverse("campaigns:details", kwargs={"slug": self.slug})
 
-    def get_conversations(self):
-        return self.topic.conversations.all()
+    def get_posts(self):
+        return self.posts.filter(campaign=self)
 
     def get_volunteers(self):
         return self.volunteers.filter(status="Accepted")
